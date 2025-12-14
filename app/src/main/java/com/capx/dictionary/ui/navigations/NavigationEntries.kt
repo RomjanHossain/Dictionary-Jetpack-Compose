@@ -7,11 +7,14 @@ import com.capx.dictionary.ui.screens.details.DetailScreen
 import com.capx.dictionary.ui.screens.home.HomeScreen
 
 data object HomeScreenKey: NavKey
-data class DetailScreenKey(val kalue:String): NavKey
+data class DetailScreenKey(val kalue: String): NavKey
 
-fun EntryProviderScope<Any>.DetailScreenKey() {
+fun EntryProviderScope<Any>.DetailScreenKey(backStackEntry: SnapshotStateList<Any>) {
     entry<DetailScreenKey> { key ->
-        DetailScreen(value = key.kalue)
+        DetailScreen(value = key.kalue, onGoBack = {
+            backStackEntry.removeLastOrNull()
+
+        })
     }
 }
 

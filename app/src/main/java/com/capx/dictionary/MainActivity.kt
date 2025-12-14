@@ -29,7 +29,7 @@ class MainActivity : ComponentActivity() {
                     },
                     entryProvider = entryProvider {
                         HomeScreenKey(backStackEntry)
-                        DetailScreenKey()
+                        DetailScreenKey(backStackEntry)
                     },
                     transitionSpec = {
                         slideInHorizontally(initialOffsetX = {it}) togetherWith slideOutHorizontally(

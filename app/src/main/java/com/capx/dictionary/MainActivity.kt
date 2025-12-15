@@ -7,38 +7,47 @@ import androidx.activity.enableEdgeToEdge
 import androidx.compose.animation.slideInHorizontally
 import androidx.compose.animation.slideOutHorizontally
 import androidx.compose.animation.togetherWith
-import androidx.compose.runtime.mutableStateListOf
-import androidx.compose.runtime.remember
 import androidx.navigation3.runtime.entryProvider
 import androidx.navigation3.ui.NavDisplay
-import com.capx.dictionary.ui.navigations.DetailScreenKey
-import com.capx.dictionary.ui.navigations.HomeScreenKey
+import com.capx.dictionary.di.navigation.EntryProviderInstaller
+import com.capx.dictionary.di.navigation.Navigator
 import com.capx.dictionary.ui.theme.DictionaryTheme
+import dagger.hilt.android.AndroidEntryPoint
+import javax.inject.Inject
 
+@AndroidEntryPoint
 class MainActivity : ComponentActivity() {
+    @Inject
+    lateinit var navigator: Navigator
+
+    @Inject
+    lateinit var entryProviders: Set<@JvmSuppressWildcards EntryProviderInstaller>
+
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         setContent {
-            val backStackEntry = remember { mutableStateListOf<Any>(HomeScreenKey) }
+//            val backStackEntry = remember { mutableStateListOf<Any>(HomeScreenKey) }
             DictionaryTheme {
                 NavDisplay(
-                    backStack = backStackEntry,
+                    backStack = navigator.backstack,
                     onBack = {
-                        backStackEntry.removeLastOrNull()
+                        navigator.pop()
                     },
                     entryProvider = entryProvider {
-                        HomeScreenKey(backStackEntry)
-                        DetailScreenKey(backStackEntry)
+                        entryProviders.forEach { builder ->
+                            this.builder()
+                        }
                     },
                     transitionSpec = {
-                        slideInHorizontally(initialOffsetX = {it}) togetherWith slideOutHorizontally(
-                            targetOffsetX = {-it}
+                        slideInHorizontally(initialOffsetX = { it }) togetherWith slideOutHorizontally(
+                            targetOffsetX = { -it }
                         )
                     },
                     popTransitionSpec = {
-                        slideInHorizontally(initialOffsetX = {-it}) togetherWith slideOutHorizontally(
-                            targetOffsetX = {it}
+                        slideInHorizontally(initialOffsetX = { -it }) togetherWith slideOutHorizontally(
+                            targetOffsetX = { it }
                         )
                     }
                 )

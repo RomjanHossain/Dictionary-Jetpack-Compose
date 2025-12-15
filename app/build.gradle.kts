@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -22,7 +25,7 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -42,6 +45,9 @@ android {
 }
 
 dependencies {
+
+    // ksp
+    ksp(Google.Dagger.hilt.compiler)
     // core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -53,6 +59,12 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     // navigation
     implementation(libs.androidx.navigation3.ui)
+
+    // view model
+    implementation(AndroidX.lifecycle.viewModel)
+    // hilt
+    implementation(Google.Dagger.hilt.android)
+    implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
     // TEST
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

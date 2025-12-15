@@ -65,6 +65,12 @@ dependencies {
     // hilt
     implementation(Google.Dagger.hilt.android)
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
+    // room
+//    val room_version = "2.8.4"
+//    implementation("androidx.room:room-runtime:$room_version")
+//    ksp("androidx.room:room-compiler:$room_version")
+    // retrofit
+    implementation(libs.retrofit)
     // TEST
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

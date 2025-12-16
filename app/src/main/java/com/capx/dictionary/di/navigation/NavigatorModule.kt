@@ -13,6 +13,6 @@ object NavigatorModule {
     @Provides
     @ActivityRetainedScoped
     fun providesNavigation(): Navigator {
-        return Navigator(HomeScreenKey)
+        return Navigator(SplashScreenKey)
     }
 }

@@ -1,6 +1,7 @@
 package com.capx.dictionary.di.navigation
 
 import androidx.navigation3.runtime.EntryProviderScope
+import com.capx.dictionary.ui.screens.Splash.SplashScreen
 import com.capx.dictionary.ui.screens.details.DetailScreen
 import com.capx.dictionary.ui.screens.home.HomeScreen
 import dagger.Module
@@ -14,34 +15,44 @@ import dagger.multibindings.IntoSet
 typealias EntryProviderInstaller = EntryProviderScope<Any>.() -> Unit
 
 // screens
+data object SplashScreenKey
 data object HomeScreenKey
 data class DetailScreenKey(val kalue: String)
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
 object NavigationScreensModule {
-
     @IntoSet
     @Provides
     fun providesNavigationEntryProviderScopes(navigator: Navigator): EntryProviderInstaller {
         return {
+            entry<SplashScreenKey> {
+                SplashScreen(
+                    onFinished = {
+                        navigator.push(
+                            HomeScreenKey
+                        )
+                    }
+                )
+            }
             entry<HomeScreenKey> {
                 HomeScreen(
-                    onSearch = { it ->
+                    onSearch = {
                         navigator.push(
                             DetailScreenKey(
                                 kalue = it
                             )
                         )
-                    })
+                    }
+                )
             }
             entry<DetailScreenKey> { key ->
                 DetailScreen(value = key.kalue, onGoBack = {
                     navigator.pop()
-                })
+                }
+                )
             }
         }
-
     }
 }
 

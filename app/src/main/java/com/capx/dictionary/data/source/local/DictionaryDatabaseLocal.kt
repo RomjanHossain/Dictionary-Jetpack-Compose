@@ -6,9 +6,14 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.capx.dictionary.data.dao.DictionaryDao
 import com.capx.dictionary.data.entity.DictionaryData
+import com.capx.dictionary.data.entity.DictionaryFts
 
 
-@Database(entities = [DictionaryData::class], version = 1)
+@Database(
+    entities = [DictionaryData::class,
+        DictionaryFts::class
+    ], version = 1
+)
 abstract class DictionaryDatabaseLocal : RoomDatabase() {
     abstract fun dictionaryDao(): DictionaryDao
 

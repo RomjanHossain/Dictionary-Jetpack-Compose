@@ -45,7 +45,14 @@ android {
 }
 
 dependencies {
+
     implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging) // <-- ADD THIS LINE
+    val paging_version = "3.3.6"
+    // Paging 3
+    implementation("androidx.paging:paging-runtime-ktx:$paging_version")
+    // Paging Compose integration
+    implementation("androidx.paging:paging-compose:$paging_version")
     // ksp
     ksp(Google.Dagger.hilt.compiler)
     // core

@@ -45,7 +45,6 @@ android {
 }
 
 dependencies {
-
     // ksp
     ksp(Google.Dagger.hilt.compiler)
     // core
@@ -59,18 +58,22 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     // navigation
     implementation(libs.androidx.navigation3.ui)
-
     // view model
     implementation(AndroidX.lifecycle.viewModel)
     // hilt
     implementation(Google.Dagger.hilt.android)
     implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
     // room
-//    val room_version = "2.8.4"
-//    implementation("androidx.room:room-runtime:$room_version")
-//    ksp("androidx.room:room-compiler:$room_version")
-    // retrofit
-    implementation(libs.retrofit)
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    // Retrofit & OkHttp
+    implementation("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation("com.squareup.okhttp3:okhttp:4.12.0")
+    // For logging (optional, but highly recommended during development)
+    implementation("com.squareup.okhttp3:logging-interceptor:4.12.0")
+    // Kotlin Coroutines
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-core:1.7.3")
+    implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.7.3")
     // TEST
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

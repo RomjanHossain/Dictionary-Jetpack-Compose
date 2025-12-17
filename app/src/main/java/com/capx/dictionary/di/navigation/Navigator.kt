@@ -11,10 +11,12 @@ class Navigator(startDestination: Any) {
     fun push(newDestination: Any) {
         backstack.add(newDestination)
     }
+
     fun pushAndReplace(newDestination: Any) {
         backstack.removeLastOrNull()
         backstack.add(newDestination)
     }
+
 
     fun pop() {
         backstack.removeLastOrNull()

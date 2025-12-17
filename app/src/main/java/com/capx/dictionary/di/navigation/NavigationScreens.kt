@@ -29,7 +29,7 @@ object NavigationScreensModule {
             entry<SplashScreenKey> {
                 SplashScreen(
                     onFinished = {
-                        navigator.push(
+                        navigator.pushAndReplace(
                             HomeScreenKey
                         )
                     }

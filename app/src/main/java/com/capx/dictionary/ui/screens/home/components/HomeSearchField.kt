@@ -24,6 +24,7 @@ import androidx.compose.ui.text.input.ImeAction
 import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.paging.LoadState.Loading
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capx.dictionary.R
 import com.capx.dictionary.ui.screens.home.viewmodels.HomeViewModel
@@ -40,6 +41,7 @@ fun HomeSearchField(
     val state = viewModel.homeState.collectAsState().value
     val searchResults = viewModel.searchResult.collectAsLazyPagingItems()
     val keyboardController = LocalSoftwareKeyboardController.current
+
     Column() {
         OutlinedTextField(
             modifier = modifier
@@ -61,8 +63,8 @@ fun HomeSearchField(
                 Icon(painter = painterResource(R.drawable.search), "Search Icon")
             },
             trailingIcon = {
-                if (state.isLoading) {
-                    CircularWavyProgressIndicator()
+                if (searchResults.itemCount != 0 && searchResults.loadState.refresh is Loading) {
+                    CircularWavyProgressIndicator(modifier = Modifier.padding(5.dp))
                 }
 
             }

@@ -50,10 +50,9 @@ class HomeViewModel @Inject constructor(private val database: DictionaryDao) : V
 
     fun getSearchResults(query: String): Flow<PagingData<DictionaryFts>> {
         return Pager(
-            // The factory function that provides the PagingSource
             PagingConfig(
-                pageSize = 30, // Define how many items to load per page
-                enablePlaceholders = false // Recommended for simple lists
+                pageSize = 30,
+                enablePlaceholders = false
             ), pagingSourceFactory = {
                 database.searchFts(query)
             }

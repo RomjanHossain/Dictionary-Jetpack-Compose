@@ -33,6 +33,6 @@ interface DictionaryDao {
     suspend fun getAlle2e(): List<DictionaryData>
 
 
-    @Query("SELECT title FROM bangladic_fts where lower(title) like lower(:query)||'%'")
+    @Query("SELECT distinct title FROM bangladic_fts where lower(title) like lower(:query)||'%'")
     fun searchFts(query: String): PagingSource<Int, DictionaryFts>
 }

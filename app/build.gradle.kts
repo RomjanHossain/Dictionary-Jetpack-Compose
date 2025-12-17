@@ -45,9 +45,6 @@ android {
 }
 
 dependencies {
-
-    implementation(libs.androidx.room.ktx)
-    implementation(libs.androidx.room.paging) // <-- ADD THIS LINE
     val paging_version = "3.3.6"
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$paging_version")
@@ -74,17 +71,16 @@ dependencies {
     // room
     implementation(libs.androidx.room.runtime)
     ksp(libs.androidx.room.compiler)
-    // Retrofit & OkHttp
-    implementation(libs.retrofit.v290)
-    implementation(libs.okhttp)
-    // For logging (optional, but highly recommended during development)
-    implementation(libs.logging.interceptor)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    // trying download manager
+    implementation("io.ktor:ktor-client-android:3.3.3")
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
     // material design
     implementation(libs.androidx.material3)
-    // TEST
+    // TEST ====================================================
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)

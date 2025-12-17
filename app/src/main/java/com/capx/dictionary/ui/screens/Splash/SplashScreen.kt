@@ -3,6 +3,7 @@ package com.capx.dictionary.ui.screens.Splash
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.LinearWavyProgressIndicator
@@ -78,8 +79,7 @@ fun SplashBody(modifier: Modifier, state: SplashScreenStates) {
 @Composable
 fun ProgressForDownload(progress: Float) {
     LinearWavyProgressIndicator(
-        progress = {
-            progress
-        },
+        progress = { progress / 100 },
+        modifier = Modifier.fillMaxWidth(),
     )
 }

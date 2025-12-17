@@ -45,6 +45,7 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.compose)
     val paging_version = "3.3.6"
     // Paging 3
     implementation("androidx.paging:paging-runtime-ktx:$paging_version")

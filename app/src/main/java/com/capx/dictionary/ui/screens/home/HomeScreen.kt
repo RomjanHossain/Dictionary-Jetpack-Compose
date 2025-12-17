@@ -80,7 +80,9 @@ fun HomeScreen(onSearch: (text: String) -> Unit) {
                             .fillMaxSize(),
                         onSearch = onSearch
                     )
-                    Destinations.Words -> DictionaryScreen()
+                    Destinations.Words -> DictionaryScreen(
+                        modifier = Modifier.padding(innerPadding).fillMaxSize()
+                    )
                     Destinations.Bookmarks -> BookmarkScreen()
                 }
                 }

@@ -2,29 +2,61 @@ package com.capx.dictionary.ui.screens.details.components
 
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.material3.CircularWavyProgressIndicator
+import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
+import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.capx.dictionary.R
+import com.capx.dictionary.ui.screens.details.viewmodels.DetailScreenState
+import com.capx.dictionary.ui.screens.details.viewmodels.DetailViewModel
+import com.capx.dictionary.utils.AppLogger
 
 
+@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
-fun DetailBody(value: String, modifier: Modifier = Modifier) {
+fun DetailBody(
+    value: String,
+    modifier: Modifier = Modifier,
+    viewModel: DetailViewModel = hiltViewModel()
+) {
+    val state = viewModel.detailState.collectAsState()
+    viewModel.searchForTheWord(value)
     Column(modifier = modifier) {
         Text(value, style = MaterialTheme.typography.displaySmall)
-        DetailCardForTrans(
-            title = stringResource(R.string.Bengali),
-            content = "This is a placeholder for the actual content",
-            modifier = Modifier.padding(vertical = 10.dp)
-        )
-        DetailCardForTrans(
-            title = stringResource(R.string.English),
-            content = "This is a placeholder for the actual content"
-        )
+        when (state.value) {
+            is DetailScreenState.Error -> Text((state.value as DetailScreenState.Error).msg)
+            DetailScreenState.Loading -> CircularWavyProgressIndicator()
+            is DetailScreenState.Success -> {
+                val data = (state.value as DetailScreenState.Success).data
+                LazyColumn(
+
+                ) {
+                    items(data.size) {
+                        val curr = data[it]
+                        AppLogger.debug("Current: ${curr.title} - ${curr.originalFile}")
+                        val title =
+                            if ((curr.originalFile?.contains("b2b") ?: false || curr.originalFile?.contains(
+                                    "e2b"
+                                ) ?: false)
+                            ) stringResource(R.string.Bengali) else stringResource(R.string.English)
+                        DetailCardForTrans(
+                            title = title,
+                            content = curr.body ?: "",
+                            modifier = Modifier.padding(vertical = 10.dp)
+                        )
+                    }
+                }
+
+            }
+        }
     }
 
 }

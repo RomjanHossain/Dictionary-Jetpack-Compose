@@ -43,7 +43,7 @@ object NavigationScreensModule {
                                 kalue = it
                             )
                         )
-                    }
+                    },
                 )
             }
             entry<DetailScreenKey> { key ->

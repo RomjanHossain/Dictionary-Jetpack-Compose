@@ -17,13 +17,16 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.capx.dictionary.R
 import com.capx.dictionary.ui.screens.details.components.DetailBody
 import com.capx.dictionary.ui.screens.details.components.DetailCardForTrans
 import com.capx.dictionary.ui.screens.details.components.DetailTopBar
+import com.capx.dictionary.ui.screens.details.viewmodels.DetailViewModel
 
 @Composable
-fun DetailScreen(value: String, onGoBack: () -> Unit) {
+fun DetailScreen(value: String, onGoBack: () -> Unit, ) {
+
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -35,7 +38,8 @@ fun DetailScreen(value: String, onGoBack: () -> Unit) {
                 .padding(innerPadding)
                 .fillMaxSize()
                 .padding(horizontal = 20.dp),
-            value = value
+            value = value,
+
         )
     }
 }

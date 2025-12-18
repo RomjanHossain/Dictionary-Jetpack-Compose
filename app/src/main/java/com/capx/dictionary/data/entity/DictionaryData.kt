@@ -29,4 +29,5 @@ data class DictionaryFts(
     @ColumnInfo(name = "rowid")
     val id: Int?,
     val title: String?,
+    val original_file: String?,
 )

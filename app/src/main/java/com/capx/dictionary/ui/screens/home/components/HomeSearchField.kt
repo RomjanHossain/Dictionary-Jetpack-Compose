@@ -9,8 +9,8 @@ import androidx.compose.foundation.text.KeyboardActions
 import androidx.compose.foundation.text.KeyboardOptions
 import androidx.compose.material3.Card
 import androidx.compose.material3.CircularWavyProgressIndicator
-import androidx.compose.material3.Divider
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
+import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.OutlinedTextField
@@ -36,9 +36,7 @@ fun HomeSearchField(
     onSearch: (text: String) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
-//    var text by remember { mutableStateOf("") }
     val text = viewModel.searchInput.collectAsState().value
-    val state = viewModel.homeState.collectAsState().value
     val searchResults = viewModel.searchResult.collectAsLazyPagingItems()
     val keyboardController = LocalSoftwareKeyboardController.current
 
@@ -93,7 +91,7 @@ fun HomeSearchField(
                             curr?.title ?: "",
                             style = MaterialTheme.typography.bodyLarge
                         )
-                        Divider()
+                        HorizontalDivider()
                     }
                 }
             }

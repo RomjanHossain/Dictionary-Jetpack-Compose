@@ -27,8 +27,8 @@ fun DetailBody(
     modifier: Modifier = Modifier,
     viewModel: DetailViewModel = hiltViewModel()
 ) {
-    val state = viewModel.detailState.collectAsState()
     viewModel.searchForTheWord(value)
+    val state = viewModel.detailState.collectAsState()
     Column(modifier = modifier) {
         Text(value, style = MaterialTheme.typography.displaySmall)
         when (state.value) {
@@ -37,7 +37,6 @@ fun DetailBody(
             is DetailScreenState.Success -> {
                 val data = (state.value as DetailScreenState.Success).data
                 LazyColumn(
-
                 ) {
                     items(data.size) {
                         val curr = data[it]

@@ -4,7 +4,6 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capx.dictionary.data.dao.DictionaryDao
 import com.capx.dictionary.data.entity.DictionaryData
-import com.capx.dictionary.utils.AppLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
@@ -30,13 +29,15 @@ class DetailViewModel @Inject constructor(
 
 
     fun searchForTheWord(word: String) {
+        if (_detailState.value is DetailScreenState.Success) {
+            return
+        }
+        _detailState.value = DetailScreenState.Loading
         viewModelScope.launch {
             try {
                 val results = database.getSelectedWord(word)
-                AppLogger.debug("Got Result: ${results.size}")
                 _detailState.value = DetailScreenState.Success(results)
             } catch (e: Exception) {
-                AppLogger.err("Error getting word", e)
                 _detailState.value = DetailScreenState.Error("Error Getting the Word, $e")
             }
         }

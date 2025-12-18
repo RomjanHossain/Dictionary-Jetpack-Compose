@@ -25,8 +25,9 @@ import com.capx.dictionary.ui.screens.details.components.DetailTopBar
 import com.capx.dictionary.ui.screens.details.viewmodels.DetailViewModel
 
 @Composable
-fun DetailScreen(value: String, onGoBack: () -> Unit, ) {
-
+fun DetailScreen(
+    value: String, onGoBack: () -> Unit,
+    ) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         topBar = {
@@ -40,7 +41,7 @@ fun DetailScreen(value: String, onGoBack: () -> Unit, ) {
                 .padding(horizontal = 20.dp),
             value = value,
 
-        )
+            )
     }
 }
 

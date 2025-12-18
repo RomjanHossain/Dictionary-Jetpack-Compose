@@ -81,9 +81,13 @@ fun HomeScreen(onSearch: (text: String) -> Unit) {
                         onSearch = onSearch
                     )
                     Destinations.Words -> DictionaryScreen(
-                        modifier = Modifier.padding(innerPadding).fillMaxSize()
+                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
+                        onSearch = onSearch
                     )
-                    Destinations.Bookmarks -> BookmarkScreen()
+                    Destinations.Bookmarks -> BookmarkScreen(
+                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
+                        onSearch = onSearch
+                    )
                 }
                 }
             }

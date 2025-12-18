@@ -30,7 +30,10 @@ class DetailViewModel @Inject constructor(
 
     fun searchForTheWord(word: String) {
         if (_detailState.value is DetailScreenState.Success) {
-            return
+            val _data = _detailState.value as DetailScreenState.Success
+            if (_data.data.firstOrNull()?.title == word) {
+                return
+            }
         }
         _detailState.value = DetailScreenState.Loading
         viewModelScope.launch {

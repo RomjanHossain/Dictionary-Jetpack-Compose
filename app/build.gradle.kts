@@ -46,11 +46,10 @@ android {
 
 dependencies {
     implementation(libs.androidx.navigation.compose)
-    val paging_version = "3.3.6"
     // Paging 3
-    implementation("androidx.paging:paging-runtime-ktx:$paging_version")
+    implementation(libs.androidx.paging.runtime.ktx)
     // Paging Compose integration
-    implementation("androidx.paging:paging-compose:$paging_version")
+    implementation(libs.androidx.paging.compose)
     // ksp
     ksp(Google.Dagger.hilt.compiler)
     // core
@@ -75,7 +74,7 @@ dependencies {
     implementation(libs.androidx.room.ktx)
     implementation(libs.androidx.room.paging)
     // trying download manager
-    implementation("io.ktor:ktor-client-android:3.3.3")
+    implementation(libs.ktor.client.android)
     // Kotlin Coroutines
     implementation(libs.kotlinx.coroutines.core)
     implementation(libs.kotlinx.coroutines.android)
@@ -84,9 +83,11 @@ dependencies {
     // TEST ====================================================
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    androidTestImplementation(libs.androidx.espresso.core)
 }

@@ -7,12 +7,16 @@ junitVersion = "1.3.0"
 espressoCore = "3.7.0"
 kotlinxCoroutinesAndroid = "1.10.2"
 kotlinxCoroutinesCore = "1.10.2"
+kotlinxCoroutinesTest = "1.10.2"
+ktorClientAndroid = "3.3.3"
 lifecycleRuntimeKtx = "2.10.0"
 activityCompose = "1.12.1"
 composeBom = "2025.12.00"
 hiltLifecycleViewmodelCompose = "1.3.0"
 material3 = "1.5.0-alpha10"
+mockk = "1.14.7"
 navigation3Ui = "1.0.0"
+pagingRuntimeKtx = "3.3.6"
 roomCompiler = "2.8.4"
 roomKtx = "2.8.4"
 navigationCompose = "2.9.6"
@@ -20,6 +24,8 @@ navigationCompose = "2.9.6"
 [libraries]
 androidx-core-ktx = { group = "androidx.core", name = "core-ktx", version.ref = "coreKtx" }
 androidx-material3 = { module = "androidx.compose.material3:material3", version.ref = "material3" }
+androidx-paging-compose = { module = "androidx.paging:paging-compose", version.ref = "pagingRuntimeKtx" }
+androidx-paging-runtime-ktx = { module = "androidx.paging:paging-runtime-ktx", version.ref = "pagingRuntimeKtx" }
 androidx-room-compiler = { module = "androidx.room:room-compiler", version.ref = "roomCompiler" }
 androidx-room-runtime = { module = "androidx.room:room-runtime", version.ref = "roomCompiler" }
 junit = { group = "junit", name = "junit", version.ref = "junit" }
@@ -42,6 +48,9 @@ kotlinx-coroutines-core = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-c
 androidx-room-ktx = { group = "androidx.room", name = "room-ktx", version.ref = "roomKtx" }
 androidx-room-paging = { group = "androidx.room", name = "room-paging", version.ref = "roomKtx" }
 androidx-navigation-compose = { group = "androidx.navigation", name = "navigation-compose", version.ref = "navigationCompose" }
+ktor-client-android = { module = "io.ktor:ktor-client-android", version.ref = "ktorClientAndroid" }
+mockk = { module = "io.mockk:mockk", version.ref = "mockk" }
+kotlinx-coroutines-test = { module = "org.jetbrains.kotlinx:kotlinx-coroutines-test", version.ref = "kotlinxCoroutinesTest" }
 
 [plugins]
 android-application = { id = "com.android.application", version.ref = "agp" }

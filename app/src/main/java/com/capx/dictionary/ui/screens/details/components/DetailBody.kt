@@ -1,6 +1,7 @@
 package com.capx.dictionary.ui.screens.details.components
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.CircularWavyProgressIndicator
@@ -17,6 +18,7 @@ import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.capx.dictionary.R
 import com.capx.dictionary.ui.screens.details.viewmodels.DetailScreenState
 import com.capx.dictionary.ui.screens.details.viewmodels.DetailViewModel
+import com.capx.dictionary.ui.screens.dictionary.components.CenterLoading
 import com.capx.dictionary.utils.AppLogger
 
 
@@ -33,7 +35,9 @@ fun DetailBody(
         Text(value, style = MaterialTheme.typography.displaySmall)
         when (state.value) {
             is DetailScreenState.Error -> Text((state.value as DetailScreenState.Error).msg)
-            DetailScreenState.Loading -> CircularWavyProgressIndicator()
+            DetailScreenState.Loading -> CenterLoading(
+                modifier = Modifier.fillMaxSize(),
+            )
             is DetailScreenState.Success -> {
                 val data = (state.value as DetailScreenState.Success).data
                 LazyColumn(

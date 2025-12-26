@@ -40,7 +40,6 @@ fun DetailScreen(
                 .fillMaxSize()
                 .padding(horizontal = 20.dp),
             value = value,
-
             )
     }
 }

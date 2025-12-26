@@ -19,15 +19,9 @@ interface DictionaryDao {
     @Query("SELECT distinct title FROM bangladic_fts where lower(title) like lower(:query)||'%'")
     fun searchFts(query: String): PagingSource<Int, DictionaryFts>
 
-    @Query("SELECT distinct title FROM bangladic_fts where original_file=='b2b'")
-    fun getAllb2b(): PagingSource<Int, DictionaryFts>
+    @Query("SELECT distinct title FROM bangladic_fts where original_file=='b2b' or original_file=='b2e'")
+    fun getAllbanglaTitles(): PagingSource<Int, DictionaryFts>
 
-    @Query("SELECT distinct title FROM bangladic_fts where original_file=='b2e'")
-    fun getAllb2e(): PagingSource<Int, DictionaryFts>
-
-    @Query("SELECT distinct title FROM bangladic_fts where original_file=='e2b'")
-    fun getAlle2b(): PagingSource<Int, DictionaryFts>
-
-    @Query("SELECT distinct title FROM bangladic_fts where original_file=='e2e'")
-    fun getAlle2e(): PagingSource<Int, DictionaryFts>
+    @Query("SELECT distinct title FROM bangladic_fts where original_file=='e2e' or original_file=='e2b'")
+    fun getAllenglishTitles(): PagingSource<Int, DictionaryFts>
 }

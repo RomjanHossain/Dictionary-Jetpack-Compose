@@ -12,8 +12,6 @@ import javax.inject.Inject
 class DictionaryViewmodel @Inject constructor(
     private val dictionaryRepository: DictionaryRepository
 ) : ViewModel() {
-    val e2e = dictionaryRepository.getE2e().cachedIn(viewModelScope)
-    val e2b = dictionaryRepository.getE2b().cachedIn(viewModelScope)
-    val b2e = dictionaryRepository.getB2e().cachedIn(viewModelScope)
-    val b2b = dictionaryRepository.getB2b().cachedIn(viewModelScope)
+    val banglash = dictionaryRepository.getAllBangla().cachedIn(viewModelScope)
+    val englishsh = dictionaryRepository.getAllEnglish().cachedIn(viewModelScope)
 }

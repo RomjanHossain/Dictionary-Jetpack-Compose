@@ -13,23 +13,34 @@ class DictionaryRepository @Inject constructor(
     private val database: DictionaryDao
 ) {
 
-    fun getAllBangla(): Flow<PagingData<DictionaryFts>> {
+    // get bangla letters
+    suspend fun getBanglaLetters(): List<DictionaryFts> {
+        return database.getAllbanglaLetters()
+    }
+
+    // get english letters
+    suspend fun getEnglishLetters(): List<DictionaryFts> {
+        return database.getAllenglishLetters()
+    }
+
+    fun getAllBangla(value: String): Flow<PagingData<DictionaryFts>> {
         return Pager(
             PagingConfig(
                 pageSize = 30,
                 enablePlaceholders = false
             ), pagingSourceFactory = {
-                database.getAllbanglaTitles()
+                database.getAllbanglaTitles(value)
             }
         ).flow
     }
-    fun getAllEnglish(): Flow<PagingData<DictionaryFts>> {
+
+    fun getAllEnglish(value: String): Flow<PagingData<DictionaryFts>> {
         return Pager(
             PagingConfig(
                 pageSize = 30,
                 enablePlaceholders = false
             ), pagingSourceFactory = {
-                database.getAllenglishTitles()
+                database.getAllenglishTitles(value)
             }
         ).flow
     }

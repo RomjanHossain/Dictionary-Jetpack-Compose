@@ -19,6 +19,11 @@ fun DetailTopBar(value: String, onGoBack: () -> Unit) {
                 Icon(painter = painterResource(R.drawable.nav_back), "Navigation back icon")
             }
         },
+        actions = {
+            IconButton(onClick = onGoBack) {
+                Icon(painter = painterResource(R.drawable.bookmark), "Bookmark this")
+            }
+        },
         title = {
             Text(value)
         },

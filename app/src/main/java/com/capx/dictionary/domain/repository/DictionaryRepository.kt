@@ -4,6 +4,7 @@ import androidx.paging.Pager
 import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.capx.dictionary.data.dao.DictionaryDao
+import com.capx.dictionary.data.entity.DictionaryBookmark
 import com.capx.dictionary.data.entity.DictionaryFts
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -28,7 +29,7 @@ class DictionaryRepository @Inject constructor(
             PagingConfig(
                 pageSize = 30,
                 enablePlaceholders = false,
-                prefetchDistance = 8,
+                prefetchDistance = 10,
             ), pagingSourceFactory = {
                 database.getAllbanglaTitles(value)
             }
@@ -39,11 +40,24 @@ class DictionaryRepository @Inject constructor(
         return Pager(
             PagingConfig(
                 pageSize = 30,
-                prefetchDistance = 8,
+                prefetchDistance = 10,
                 enablePlaceholders = false,
             ), pagingSourceFactory = {
                 database.getAllenglishTitles(value)
             }
         ).flow
+    }
+
+    // ------------------------- bookmarks
+    suspend fun deleteBookmark(bookmark: DictionaryBookmark) {
+        database.deleteBookmark(bookmark)
+    }
+
+    suspend fun insertBookmark(bookmark: DictionaryBookmark) {
+        database.insertBookmark(bookmark)
+    }
+
+    fun getAllBookmarks(): Flow<List<DictionaryBookmark>> {
+        return database.getAllBookmarks()
     }
 }

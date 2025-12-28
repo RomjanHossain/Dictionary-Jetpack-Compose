@@ -50,6 +50,7 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx)
     // Paging Compose integration
     implementation(libs.androidx.paging.compose)
+    implementation(libs.material3)
     // ksp
     ksp(Google.Dagger.hilt.compiler)
     // core

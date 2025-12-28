@@ -5,13 +5,16 @@ import androidx.room.Database
 import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.capx.dictionary.data.dao.DictionaryDao
+import com.capx.dictionary.data.entity.DictionaryBookmark
 import com.capx.dictionary.data.entity.DictionaryData
 import com.capx.dictionary.data.entity.DictionaryFts
 
 
 @Database(
-    entities = [DictionaryData::class,
-        DictionaryFts::class
+    entities = [
+        DictionaryData::class,
+        DictionaryFts::class,
+        DictionaryBookmark::class,
     ], version = 1
 )
 abstract class DictionaryDatabaseLocal : RoomDatabase() {
@@ -27,8 +30,8 @@ abstract class DictionaryDatabaseLocal : RoomDatabase() {
                     DictionaryDatabaseLocal::class.java,
                     "dictionary_db.db"
                 )
-                    .fallbackToDestructiveMigrationOnDowngrade(false) // <-- Use this if you downgrade the version
-                    .fallbackToDestructiveMigration(false) // <-- **The simplest temporary fix**
+                    .fallbackToDestructiveMigrationOnDowngrade(false)
+                    .fallbackToDestructiveMigration(false)
                     .build()
                 INSTANCE = instance
                 instance

@@ -2,7 +2,10 @@ package com.capx.dictionary.data.entity
 
 import androidx.room.ColumnInfo
 import androidx.room.Entity
+import androidx.room.ForeignKey
+import androidx.room.ForeignKey.Companion.CASCADE
 import androidx.room.Fts4
+import androidx.room.Index
 import androidx.room.PrimaryKey
 
 @Entity(tableName = "bangladic")
@@ -30,4 +33,22 @@ data class DictionaryFts(
     val id: Int?,
     val title: String?,
     val original_file: String?,
+)
+
+@Entity(
+    tableName = "bookmark", foreignKeys = [
+        ForeignKey(
+            DictionaryFts::class,
+            parentColumns = ["rowid"],
+            childColumns = ["wordID"],
+            onDelete = CASCADE,
+        )
+    ],
+    indices = [Index("wordID")]
+)
+data class DictionaryBookmark(
+    @PrimaryKey(autoGenerate = true)
+    val id: Int?,
+    val title: String?,
+    val wordID: Int,
 )

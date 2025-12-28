@@ -2,9 +2,14 @@ package com.capx.dictionary.data.dao
 
 import androidx.paging.PagingSource
 import androidx.room.Dao
+import androidx.room.Delete
+import androidx.room.Insert
+import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import com.capx.dictionary.data.entity.DictionaryBookmark
 import com.capx.dictionary.data.entity.DictionaryData
 import com.capx.dictionary.data.entity.DictionaryFts
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface DictionaryDao {
@@ -13,7 +18,7 @@ interface DictionaryDao {
     suspend fun getWordFromTitle(query: String): List<DictionaryData>
 
 
-    @Query("select * from bangladic where lower(title) =lower(:query)")
+    @Query("select distinct * from bangladic where lower(title) =lower(:query)")
     suspend fun getSelectedWord(query: String): List<DictionaryData>
 
     @Query("SELECT distinct title FROM bangladic_fts where lower(title) like lower(:query)||'%'")
@@ -33,4 +38,15 @@ interface DictionaryDao {
     //    SELECT DISTINCT substr(title,1,1) as f from bangladic where original_file=="b2e" or original_file=="b2b";
     @Query("SELECT distinct Upper(substr(title,1,1)) as title FROM bangladic_fts where original_file=='e2e' or original_file=='e2b'")
     suspend fun getAllenglishLetters(): List<DictionaryFts>
+
+    // --------------------- bookmark
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun insertBookmark(bookmark: DictionaryBookmark)
+
+    @Delete
+    suspend fun deleteBookmark(bookmark: DictionaryBookmark)
+
+    @Query("select * from bookmark order by id desc")
+    fun getAllBookmarks(): Flow<List<DictionaryBookmark>>
+
 }

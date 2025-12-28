@@ -27,7 +27,8 @@ class DictionaryRepository @Inject constructor(
         return Pager(
             PagingConfig(
                 pageSize = 30,
-                enablePlaceholders = false
+                enablePlaceholders = false,
+                prefetchDistance = 8,
             ), pagingSourceFactory = {
                 database.getAllbanglaTitles(value)
             }
@@ -38,7 +39,8 @@ class DictionaryRepository @Inject constructor(
         return Pager(
             PagingConfig(
                 pageSize = 30,
-                enablePlaceholders = false
+                prefetchDistance = 8,
+                enablePlaceholders = false,
             ), pagingSourceFactory = {
                 database.getAllenglishTitles(value)
             }

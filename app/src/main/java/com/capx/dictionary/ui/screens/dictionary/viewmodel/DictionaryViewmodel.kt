@@ -31,16 +31,20 @@ class DictionaryViewmodel @Inject constructor(
     val englishAlpha = _englishAlpha.asStateFlow()
 
 
-    //    val banglash = dictionaryRepository.getAllBangla(_banglaAlpha.value?.title ?: "")
-//        .cachedIn(viewModelScope)
     @OptIn(ExperimentalCoroutinesApi::class)
     val banglash = _banglaAlpha.flatMapLatest { alpha ->
         val searchLetter = alpha?.title ?: ""
         AppLogger.debug("changing letter: $searchLetter")
         dictionaryRepository.getAllBangla(searchLetter)
     }.cachedIn(viewModelScope)
-    val englishsh =
-        dictionaryRepository.getAllEnglish(englishAlpha.value?.title ?: "").cachedIn(viewModelScope)
+
+    //    val englishsh =
+//        dictionaryRepository.getAllEnglish(englishAlpha.value?.title ?: "").cachedIn(viewModelScope)
+    @OptIn(ExperimentalCoroutinesApi::class)
+    val englishsh = _englishAlpha.flatMapLatest { alpha ->
+        val searchLetter = alpha?.title ?: ""
+        dictionaryRepository.getAllEnglish(searchLetter)
+    }.cachedIn(viewModelScope)
 
 
     init {
@@ -54,7 +58,12 @@ class DictionaryViewmodel @Inject constructor(
     }
 
     // change bangla alpha
-    fun chanegBanglaAlpha(d: DictionaryFts) {
+    fun changeBanglaAlpha(d: DictionaryFts) {
         _banglaAlpha.value = d;
+    }
+
+    // change english alpha
+    fun changeEnglishAlpha(d: DictionaryFts) {
+        _englishAlpha.value = d;
     }
 }

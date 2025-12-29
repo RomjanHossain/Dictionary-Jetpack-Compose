@@ -33,7 +33,7 @@ import com.capx.dictionary.ui.screens.home.viewmodels.HomeViewModel
 @Composable
 fun HomeSearchField(
     modifier: Modifier = Modifier,
-    onSearch: (text: String) -> Unit,
+    onSearch: (text: String, id: Int) -> Unit,
     viewModel: HomeViewModel = hiltViewModel()
 ) {
     val text = viewModel.searchInput.collectAsState().value
@@ -52,7 +52,7 @@ fun HomeSearchField(
                 keyboardType = KeyboardType.Text
             ),
             keyboardActions = KeyboardActions(onSearch = {
-                onSearch(text)
+                onSearch(text, -1)
                 keyboardController?.hide()
             }),
             maxLines = 1,
@@ -74,19 +74,16 @@ fun HomeSearchField(
                 items(searchResults.itemCount) {
                     val curr = searchResults[it]
                     Card(
-
                         modifier = Modifier
                             .padding(start = 10.dp, top = 10.dp)
                             .clickable(
                                 enabled = true,
                                 onClick = {
                                     if (curr?.title != null) {
-                                        onSearch(curr.title)
+                                        onSearch(curr.title, curr.id ?: -1)
                                     }
                                 }),
                     ) {
-
-
                         Text(
                             curr?.title ?: "",
                             style = MaterialTheme.typography.bodyLarge

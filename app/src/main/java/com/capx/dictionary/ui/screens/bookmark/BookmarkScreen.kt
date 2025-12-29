@@ -20,18 +20,19 @@ import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.style.LineHeightStyle
 import androidx.compose.ui.text.style.TextAlign
+import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.capx.dictionary.R
 import com.capx.dictionary.data.entity.DictionaryBookmark
 import com.capx.dictionary.ui.screens.bookmark.viewmodel.BookmarkViewmodels
+import com.capx.dictionary.utils.AppLogger
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun BookmarkScreen(
-    modifier: Modifier = Modifier, onSearch: (text: String) -> Unit,
+    modifier: Modifier = Modifier, onSearch: (text: String, id: Int) -> Unit,
     viewModel: BookmarkViewmodels = hiltViewModel()
 ) {
     val bookmarks = viewModel.bookmarks.collectAsState()
@@ -42,19 +43,23 @@ fun BookmarkScreen(
             }
         )
 
-        Box(
-            modifier = Modifier.fillMaxSize(),
-            contentAlignment = Alignment.Center,
-        ) {
-            if (bookmarks.value.isEmpty()) {
+        if (bookmarks.value.isEmpty()) {
+
+            Box(
+                modifier = Modifier.fillMaxSize(),
+                contentAlignment = Alignment.Center,
+            ) {
                 Text("No Bookmarks Found!!", textAlign = TextAlign.Center)
             }
-        }
-        LazyColumn() {
-            items(bookmarks.value.size) {
-                val bookmark = bookmarks.value[it]
-                BookmarkCard(bookmark) {
-                    viewModel.delete(bookmark)
+        } else {
+
+            LazyColumn() {
+                items(bookmarks.value.size) {
+                    val bookmark = bookmarks.value[it]
+                    AppLogger.info("Current bookmark: ${bookmark.title} with ${bookmark.id}")
+                    BookmarkCard(bookmark) {
+                        viewModel.delete(bookmark)
+                    }
                 }
             }
         }
@@ -86,6 +91,20 @@ fun BookmarkCard(word: DictionaryBookmark, onDelete: (bookmark: DictionaryBookma
                     onDelete(word)
                 })
         }
+    }
+}
+
+@Preview(showBackground = true)
+@Composable
+fun PreviewBOokmarkCard() {
+    BookmarkCard(
+        DictionaryBookmark(
+            id = 3,
+            title = "HOLY",
+            wordID = 23
+        )
+    ) {
+
     }
 }
 

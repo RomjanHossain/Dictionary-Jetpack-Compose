@@ -11,13 +11,15 @@ import androidx.compose.ui.Modifier
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
+import com.capx.dictionary.data.entity.DictionaryFts
 import com.capx.dictionary.ui.screens.dictionary.viewmodel.DictionaryViewmodel
+import com.capx.dictionary.utils.AppLogger
 
 @OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun Banglabody(
     viewmodel: DictionaryViewmodel = hiltViewModel(),
-    onSearch: (text: String) -> Unit
+    onSearch: (text: String, id: Int) -> Unit
 ) {
     val data = viewmodel.banglash.collectAsLazyPagingItems()
     val letters = viewmodel.banglaLetters.collectAsState()
@@ -37,12 +39,13 @@ fun Banglabody(
             }
         }
         items(data.itemCount) {
-            val curr = data[it]
+            val curr: DictionaryFts? = data[it]
             val title = curr?.title ?: ""
             WordCard(
                 title = title,
                 onSearch = {
-                    onSearch(title)
+                    AppLogger.debug("Bangla word with id: ${curr?.id} and $title || $curr")
+                    onSearch(title, curr?.id ?: -1)
                 }
             )
         }

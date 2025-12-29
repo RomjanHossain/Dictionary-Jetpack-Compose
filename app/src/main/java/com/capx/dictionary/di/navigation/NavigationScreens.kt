@@ -17,7 +17,7 @@ typealias EntryProviderInstaller = EntryProviderScope<Any>.() -> Unit
 // screens
 data object SplashScreenKey
 data object HomeScreenKey
-data class DetailScreenKey(val kalue: String)
+data class DetailScreenKey(val kalue: String, val id: Int)
 
 @Module
 @InstallIn(ActivityRetainedComponent::class)
@@ -32,24 +32,24 @@ object NavigationScreensModule {
                         navigator.pushAndReplace(
                             HomeScreenKey
                         )
-                    }
-                )
+                    })
             }
             entry<HomeScreenKey> {
                 HomeScreen(
-                    onSearch = {
+                    onSearch = { a, b ->
                         navigator.push(
                             DetailScreenKey(
-                                kalue = it
+                                kalue = a, id = b
                             )
                         )
                     },
                 )
             }
             entry<DetailScreenKey> { key ->
-                DetailScreen(value = key.kalue, onGoBack = {
-                    navigator.pop()
-                }
+                DetailScreen(
+                    value = key.kalue, onGoBack = {
+                        navigator.pop()
+                    }, id = key.id
                 )
             }
         }

@@ -37,7 +37,7 @@ enum class Destinations(
 }
 
 @Composable
-fun HomeScreen(onSearch: (text: String) -> Unit) {
+fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
     val navController = rememberNavController()
     val startDestination = Destinations.Home
     var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
@@ -73,22 +73,28 @@ fun HomeScreen(onSearch: (text: String) -> Unit) {
         ) {
             Destinations.entries.forEach { d ->
                 composable(d.route) {
-                when (d) {
-                    Destinations.Home -> HomeBody(
-                        modifier = Modifier
-                            .padding(innerPadding)
-                            .fillMaxSize(),
-                        onSearch = onSearch
-                    )
-                    Destinations.Words -> DictionaryScreen(
-                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
-                        onSearch = onSearch
-                    )
-                    Destinations.Bookmarks -> BookmarkScreen(
-                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
-                        onSearch = onSearch
-                    )
-                }
+                    when (d) {
+                        Destinations.Home -> HomeBody(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize(),
+                            onSearch = onSearch
+                        )
+
+                        Destinations.Words -> DictionaryScreen(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize(),
+                            onSearch = onSearch
+                        )
+
+                        Destinations.Bookmarks -> BookmarkScreen(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize(),
+                            onSearch = onSearch
+                        )
+                    }
                 }
             }
         }
@@ -104,5 +110,5 @@ fun NavigationBody() {
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(onSearch = {})
+    HomeScreen(onSearch = { a, b -> })
 }

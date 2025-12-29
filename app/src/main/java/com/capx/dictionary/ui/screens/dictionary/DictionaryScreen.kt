@@ -26,7 +26,7 @@ enum class TabDestinations(
 
 @Composable
 fun DictionaryScreen(
-    modifier: Modifier = Modifier, onSearch: (text: String) -> Unit
+    modifier: Modifier = Modifier, onSearch: (text: String, id:Int) -> Unit
 ) {
     val navController = rememberNavController()
     val startDestination = TabDestinations.Bangla

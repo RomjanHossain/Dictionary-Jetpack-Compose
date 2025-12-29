@@ -38,8 +38,8 @@ data class DictionaryFts(
 @Entity(
     tableName = "bookmark", foreignKeys = [
         ForeignKey(
-            DictionaryFts::class,
-            parentColumns = ["rowid"],
+            DictionaryData::class,
+            parentColumns = ["id"],
             childColumns = ["wordID"],
             onDelete = CASCADE,
         )
@@ -48,7 +48,7 @@ data class DictionaryFts(
 )
 data class DictionaryBookmark(
     @PrimaryKey(autoGenerate = true)
-    val id: Int?,
+    val id: Int? = 0,
     val title: String?,
     val wordID: Int,
 )

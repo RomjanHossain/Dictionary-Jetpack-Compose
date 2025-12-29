@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.material3.CircularWavyProgressIndicator
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
@@ -38,6 +37,7 @@ fun DetailBody(
             DetailScreenState.Loading -> CenterLoading(
                 modifier = Modifier.fillMaxSize(),
             )
+
             is DetailScreenState.Success -> {
                 val data = (state.value as DetailScreenState.Success).data
                 LazyColumn(

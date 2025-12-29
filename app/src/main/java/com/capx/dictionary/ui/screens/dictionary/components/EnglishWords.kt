@@ -17,7 +17,7 @@ import com.capx.dictionary.ui.screens.dictionary.viewmodel.DictionaryViewmodel
 @Composable
 fun Englishbody(
     viewmodel: DictionaryViewmodel = hiltViewModel(),
-    onSearch: (text: String) -> Unit
+    onSearch: (text: String, id:Int) -> Unit
 ) {
     val data = viewmodel.englishsh.collectAsLazyPagingItems()
 
@@ -44,7 +44,7 @@ fun Englishbody(
             WordCard(
                 title = title,
                 onSearch = {
-                    onSearch(title)
+                    onSearch(title, curr?.id?:-1)
                 }
             )
         }

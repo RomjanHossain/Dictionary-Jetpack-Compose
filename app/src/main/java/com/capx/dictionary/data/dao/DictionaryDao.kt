@@ -21,18 +21,18 @@ interface DictionaryDao {
     @Query("select distinct * from bangladic where lower(title) =lower(:query)")
     suspend fun getSelectedWord(query: String): List<DictionaryData>
 
-    @Query("SELECT distinct title FROM bangladic_fts where lower(title) like lower(:query)||'%'")
+    @Query("SELECT distinct title, rowid FROM bangladic_fts where lower(title) like lower(:query)||'%'")
     fun searchFts(query: String): PagingSource<Int, DictionaryFts>
 
 //    @Query("SELECT distinct title FROM bangladic_fts where original_file=='b2b' or original_file=='b2e' and title like :letter || '%'")
 
-    @Query("SELECT distinct title FROM bangladic_fts where (original_file=='b2e' or original_file=='b2b') and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
+    @Query("SELECT distinct title, rowid FROM bangladic_fts where (original_file=='b2e' or original_file=='b2b') and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
     fun getAllbanglaTitles(letter: String): PagingSource<Int, DictionaryFts>
 
     @Query("SELECT distinct UPPER(substr(title,1,1)) as title FROM bangladic_fts where original_file=='b2b' or original_file=='b2e'")
     suspend fun getAllbanglaLetters(): List<DictionaryFts>
 
-    @Query("SELECT distinct title FROM bangladic_fts where (original_file=='e2e' or original_file=='e2b') and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
+    @Query("SELECT distinct title,rowid FROM bangladic_fts where (original_file=='e2e' or original_file=='e2b') and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
     fun getAllenglishTitles(letter: String): PagingSource<Int, DictionaryFts>
 
     //    SELECT DISTINCT substr(title,1,1) as f from bangladic where original_file=="b2e" or original_file=="b2b";
@@ -48,5 +48,8 @@ interface DictionaryDao {
 
     @Query("select * from bookmark order by id desc")
     fun getAllBookmarks(): Flow<List<DictionaryBookmark>>
+
+    @Query("select exists(select * from bookmark where wordID=:id)")
+    fun getSelectedBookmarkStatus(id: Int): Flow<Boolean>
 
 }

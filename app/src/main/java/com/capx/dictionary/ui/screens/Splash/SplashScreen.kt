@@ -55,7 +55,7 @@ fun SplashScreen(
 }
 
 @Composable
-fun SplashBody(modifier: Modifier= Modifier, state: SplashScreenStates) {
+fun SplashBody(modifier: Modifier = Modifier, state: SplashScreenStates) {
     Column(
         modifier = modifier.fillMaxSize(),
         verticalArrangement = Arrangement.Center,
@@ -78,7 +78,7 @@ fun SplashBody(modifier: Modifier= Modifier, state: SplashScreenStates) {
             }
 
             is SplashScreenStates.Progress -> {
-                Text("Downloading ${state.progress}%", textAlign = TextAlign.Center)
+                Text("Downloading ${state.progress.toInt()}%", textAlign = TextAlign.Center)
                 ProgressForDownload(state.progress)
             }
 
@@ -94,9 +94,9 @@ fun SplashBody(modifier: Modifier= Modifier, state: SplashScreenStates) {
 fun ProgressForDownload(progress: Float) {
     LinearWavyProgressIndicator(
         progress = { progress / 100 },
-        modifier = Modifier.fillMaxWidth().padding(horizontal = 20.dp),
-        color = Color.Green,
-        trackColor = Color.Red,
+        modifier = Modifier
+            .fillMaxWidth()
+            .padding(horizontal = 20.dp),
         gapSize = 0.dp,
         stopSize = 0.dp,
         wavelength = 20.dp,
@@ -105,6 +105,6 @@ fun ProgressForDownload(progress: Float) {
 
 @Preview(showBackground = true)
 @Composable
-fun SplashBodyPreview(){
-    SplashBody(state = SplashScreenStates.Success)
+fun SplashBodyPreview() {
+    SplashBody(state = SplashScreenStates.Progress(22.2f))
 }

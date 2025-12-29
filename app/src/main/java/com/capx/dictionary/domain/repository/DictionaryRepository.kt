@@ -5,6 +5,7 @@ import androidx.paging.PagingConfig
 import androidx.paging.PagingData
 import com.capx.dictionary.data.dao.DictionaryDao
 import com.capx.dictionary.data.entity.DictionaryBookmark
+import com.capx.dictionary.data.entity.DictionaryData
 import com.capx.dictionary.data.entity.DictionaryFts
 import kotlinx.coroutines.flow.Flow
 import javax.inject.Inject
@@ -13,6 +14,16 @@ import javax.inject.Inject
 class DictionaryRepository @Inject constructor(
     private val database: DictionaryDao
 ) {
+
+    /// get single word detail
+    suspend fun getSingleWord(word: String): List<DictionaryData> {
+        return database.getSelectedWord(word);
+    }
+
+    /// check the word is bookmarked or not
+    fun isBookmarked(id: Int): Flow<Boolean> {
+        return database.getSelectedBookmarkStatus(id)
+    }
 
     // get bangla letters
     suspend fun getBanglaLetters(): List<DictionaryFts> {

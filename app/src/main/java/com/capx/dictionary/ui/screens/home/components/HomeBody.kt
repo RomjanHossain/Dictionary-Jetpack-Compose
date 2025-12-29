@@ -14,7 +14,7 @@ import androidx.compose.ui.unit.dp
 import com.capx.dictionary.R
 
 @Composable
-fun HomeBody(modifier: Modifier = Modifier, onSearch: (text: String) -> Unit) {
+fun HomeBody(modifier: Modifier = Modifier, onSearch: (text: String, id: Int) -> Unit) {
     Column(
         modifier = modifier.padding(horizontal = 20.dp),
         verticalArrangement = Arrangement.Center
@@ -32,6 +32,6 @@ fun HomeBody(modifier: Modifier = Modifier, onSearch: (text: String) -> Unit) {
 
 @Preview(showBackground = true)
 @Composable
-fun PreviewHomeBody(){
-    HomeBody(onSearch = {})
+fun PreviewHomeBody() {
+    HomeBody(onSearch = {a,b->})
 }

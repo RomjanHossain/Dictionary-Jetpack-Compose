@@ -59,3 +59,10 @@ class HomeViewModel @Inject constructor(private val database: DictionaryDao) : V
         ).flow
     }
 }
+
+/*
+* patient pdfs
+* doctor data
+* doctor data edit
+* dashboard
+ */

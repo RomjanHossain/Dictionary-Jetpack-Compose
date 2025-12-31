@@ -57,9 +57,10 @@ fun BookmarkScreen(
                 items(bookmarks.value.size) {
                     val bookmark = bookmarks.value[it]
                     AppLogger.info("Current bookmark: ${bookmark.title} with ${bookmark.id}")
-                    BookmarkCard(bookmark) {
+                    BookmarkCard(bookmark, onSearch = onSearch, onDelete = {
                         viewModel.delete(bookmark)
-                    }
+                    })
+
                 }
             }
         }
@@ -70,11 +71,18 @@ fun BookmarkScreen(
 
 
 @Composable
-fun BookmarkCard(word: DictionaryBookmark, onDelete: (bookmark: DictionaryBookmark) -> Unit) {
+fun BookmarkCard(
+    word: DictionaryBookmark,
+    onDelete: (bookmark: DictionaryBookmark) -> Unit,
+    onSearch: (text: String, id: Int) -> Unit
+) {
     Card(
         modifier = Modifier
             .fillMaxWidth()
             .padding(horizontal = 10.dp, vertical = 5.dp)
+            .clickable {
+                onSearch(word.title ?: "", word.id ?: 0)
+            }
     ) {
         Row(
             modifier = Modifier
@@ -102,10 +110,12 @@ fun PreviewBOokmarkCard() {
             id = 3,
             title = "HOLY",
             wordID = 23
-        )
-    ) {
+        ),
+        onDelete = {},
+        onSearch = { a, b -> }
+    )
 
-    }
+
 }
 
 

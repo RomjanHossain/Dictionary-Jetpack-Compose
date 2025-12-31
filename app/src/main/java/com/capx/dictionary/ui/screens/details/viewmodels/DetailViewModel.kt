@@ -3,7 +3,7 @@ package com.capx.dictionary.ui.screens.details.viewmodels
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capx.dictionary.data.entity.DictionaryBookmark
-import com.capx.dictionary.data.entity.DictionaryData
+import com.capx.dictionary.data.entity.DictionaryDataDetails
 import com.capx.dictionary.domain.repository.DictionaryRepository
 import com.capx.dictionary.utils.AppLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -14,7 +14,7 @@ import javax.inject.Inject
 
 sealed class DetailScreenState {
     data object Loading : DetailScreenState()
-    data class Success(val data: List<DictionaryData>) : DetailScreenState()
+    data class Success(val data: List<DictionaryDataDetails>) : DetailScreenState()
     data class Error(val msg: String) : DetailScreenState()
 }
 
@@ -52,7 +52,7 @@ class DetailViewModel @Inject constructor(
                 dictionaryRepository.insertBookmark(
                     DictionaryBookmark(
                         title = value,
-                        wordID = id
+                        wordID = id,
                     )
                 )
             }

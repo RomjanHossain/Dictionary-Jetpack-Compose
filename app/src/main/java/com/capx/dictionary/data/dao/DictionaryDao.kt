@@ -7,36 +7,37 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.capx.dictionary.data.entity.DictionaryBookmark
-import com.capx.dictionary.data.entity.DictionaryData
+import com.capx.dictionary.data.entity.DictionaryDataDetails
 import com.capx.dictionary.data.entity.DictionaryFts
 import kotlinx.coroutines.flow.Flow
+
 
 @Dao
 interface DictionaryDao {
 
-    @Query("select * from bangladic where lower(title) like lower(:query)||'%'")
-    suspend fun getWordFromTitle(query: String): List<DictionaryData>
+    // detail of the word
+    @Query("select * from dictionaryDetails where title = :query collate nocase")
+    suspend fun getSelectedWord(query: String): List<DictionaryDataDetails>
 
-
-    @Query("select distinct * from bangladic where lower(title) =lower(:query)")
-    suspend fun getSelectedWord(query: String): List<DictionaryData>
-
-    @Query("SELECT distinct title, rowid FROM bangladic_fts where lower(title) like lower(:query)||'%'")
+    ///  search word HOMESCREEN
+    @Query("SELECT distinct title, rowid FROM dictionary_fts where lower(title) like lower(:query)||'%'")
     fun searchFts(query: String): PagingSource<Int, DictionaryFts>
 
-//    @Query("SELECT distinct title FROM bangladic_fts where original_file=='b2b' or original_file=='b2e' and title like :letter || '%'")
 
-    @Query("SELECT distinct title, rowid FROM bangladic_fts where (original_file=='b2e' or original_file=='b2b') and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
+    // get all words from the alphabets
+    @Query("SELECT distinct title, rowid FROM dictionary_fts where source_lang=='b' and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
     fun getAllbanglaTitles(letter: String): PagingSource<Int, DictionaryFts>
 
-    @Query("SELECT distinct UPPER(substr(title,1,1)) as title FROM bangladic_fts where original_file=='b2b' or original_file=='b2e'")
+    // alphabets bangla
+    @Query("SELECT distinct UPPER(substr(title,1,1)) as title FROM dictionary_fts where source_lang=='b' ")
     suspend fun getAllbanglaLetters(): List<DictionaryFts>
 
-    @Query("SELECT distinct title,rowid FROM bangladic_fts where (original_file=='e2e' or original_file=='e2b') and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
+    // get all words from the alphabets
+    @Query("SELECT title,rowid FROM dictionary_fts where source_lang=='e'  and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
     fun getAllenglishTitles(letter: String): PagingSource<Int, DictionaryFts>
 
-    //    SELECT DISTINCT substr(title,1,1) as f from bangladic where original_file=="b2e" or original_file=="b2b";
-    @Query("SELECT distinct Upper(substr(title,1,1)) as title FROM bangladic_fts where original_file=='e2e' or original_file=='e2b'")
+    // alphabets english
+    @Query("SELECT distinct Upper(substr(title,1,1)) as title FROM dictionary_fts where source_lang=='e'")
     suspend fun getAllenglishLetters(): List<DictionaryFts>
 
     // --------------------- bookmark
@@ -51,5 +52,4 @@ interface DictionaryDao {
 
     @Query("select exists(select * from bookmark where wordID=:id)")
     fun getSelectedBookmarkStatus(id: Int): Flow<Boolean>
-
 }

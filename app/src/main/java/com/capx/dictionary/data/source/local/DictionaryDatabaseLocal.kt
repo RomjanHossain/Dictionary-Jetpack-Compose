@@ -6,13 +6,15 @@ import androidx.room.Room
 import androidx.room.RoomDatabase
 import com.capx.dictionary.data.dao.DictionaryDao
 import com.capx.dictionary.data.entity.DictionaryBookmark
-import com.capx.dictionary.data.entity.DictionaryData
+import com.capx.dictionary.data.entity.DictionaryDataDetails
+import com.capx.dictionary.data.entity.DictionaryDataTitles
 import com.capx.dictionary.data.entity.DictionaryFts
 
 
 @Database(
     entities = [
-        DictionaryData::class,
+        DictionaryDataTitles::class,
+        DictionaryDataDetails::class,
         DictionaryFts::class,
         DictionaryBookmark::class,
     ], version = 1

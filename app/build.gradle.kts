@@ -51,6 +51,8 @@ dependencies {
     // Paging Compose integration
     implementation(libs.androidx.paging.compose)
     implementation(libs.material3)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter)
     // ksp
     ksp(Google.Dagger.hilt.compiler)
     // core
@@ -91,4 +93,9 @@ dependencies {
     testImplementation(libs.kotlinx.coroutines.test)
     testImplementation(libs.mockk)
     androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    androidTestImplementation(libs.slf4j.android)
+    testImplementation(libs.slf4j.simple)
+    testImplementation(libs.turbine)
 }

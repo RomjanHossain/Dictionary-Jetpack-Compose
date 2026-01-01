@@ -2,6 +2,9 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.kotlin.android)
     alias(libs.plugins.kotlin.compose)
+
+    id("com.google.devtools.ksp")
+    id("com.google.dagger.hilt.android")
 }
 
 android {
@@ -22,7 +25,9 @@ android {
 
     buildTypes {
         release {
-            isMinifyEnabled = false
+            isMinifyEnabled = true
+            isDebuggable = false
+            isShrinkResources = true
             proguardFiles(
                 getDefaultProguardFile("proguard-android-optimize.txt"),
                 "proguard-rules.pro"
@@ -42,6 +47,16 @@ android {
 }
 
 dependencies {
+    implementation(libs.androidx.navigation.compose)
+    // Paging 3
+    implementation(libs.androidx.paging.runtime.ktx)
+    // Paging Compose integration
+    implementation(libs.androidx.paging.compose)
+    implementation(libs.material3)
+    testImplementation(libs.junit.jupiter)
+    testImplementation(libs.junit.jupiter)
+    // ksp
+    ksp(Google.Dagger.hilt.compiler)
     // core
     implementation(libs.androidx.core.ktx)
     implementation(libs.androidx.lifecycle.runtime.ktx)
@@ -53,12 +68,36 @@ dependencies {
     implementation(libs.androidx.compose.material3)
     // navigation
     implementation(libs.androidx.navigation3.ui)
-    // TEST
+    // view model
+    implementation(AndroidX.lifecycle.viewModel)
+    // hilt
+    implementation(Google.Dagger.hilt.android)
+    implementation(libs.androidx.hilt.lifecycle.viewmodel.compose)
+    // room
+    implementation(libs.androidx.room.runtime)
+    ksp(libs.androidx.room.compiler)
+    implementation(libs.androidx.room.ktx)
+    implementation(libs.androidx.room.paging)
+    // trying download manager
+    implementation(libs.ktor.client.android)
+    // Kotlin Coroutines
+    implementation(libs.kotlinx.coroutines.core)
+    implementation(libs.kotlinx.coroutines.android)
+    // material design
+    implementation(libs.androidx.material3)
+    // TEST ====================================================
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
-    androidTestImplementation(libs.androidx.espresso.core)
     androidTestImplementation(platform(libs.androidx.compose.bom))
     androidTestImplementation(libs.androidx.compose.ui.test.junit4)
     debugImplementation(libs.androidx.compose.ui.tooling)
     debugImplementation(libs.androidx.compose.ui.test.manifest)
+    testImplementation(libs.kotlinx.coroutines.test)
+    testImplementation(libs.mockk)
+    androidTestImplementation(libs.androidx.espresso.core)
+    androidTestImplementation(libs.androidx.ui.test.junit4)
+    debugImplementation(libs.androidx.ui.tooling)
+    androidTestImplementation(libs.slf4j.android)
+    testImplementation(libs.slf4j.simple)
+    testImplementation(libs.turbine)
 }

@@ -1,98 +1,108 @@
 package com.capx.dictionary.ui.screens.home
 
-import androidx.compose.foundation.layout.Arrangement
-import androidx.compose.foundation.layout.Column
-import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
-import androidx.compose.foundation.layout.fillMaxWidth
-import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.text.KeyboardActions
-import androidx.compose.foundation.text.KeyboardOptions
+import androidx.compose.material3.BottomAppBar
 import androidx.compose.material3.Icon
-import androidx.compose.material3.MaterialTheme
-import androidx.compose.material3.OutlinedTextField
+import androidx.compose.material3.NavigationBar
+import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
-import androidx.compose.runtime.remember
+import androidx.compose.runtime.mutableIntStateOf
+import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
-import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.input.ImeAction
-import androidx.compose.ui.text.input.KeyboardType
 import androidx.compose.ui.tooling.preview.Preview
-import androidx.compose.ui.unit.dp
+import androidx.navigation.compose.NavHost
+import androidx.navigation.compose.composable
+import androidx.navigation.compose.rememberNavController
 import com.capx.dictionary.R
-import com.capx.dictionary.ui.theme.DictionaryTheme
+import com.capx.dictionary.ui.screens.bookmark.BookmarkScreen
+import com.capx.dictionary.ui.screens.dictionary.DictionaryScreen
+import com.capx.dictionary.ui.screens.home.components.HomeBody
 
 
-@Composable
-fun HomeScreen(onSearch:(text:String)->Unit){
-    Scaffold(modifier = Modifier.fillMaxSize()) { innerPadding ->
-                    HomeBody(
-                        modifier = Modifier.padding(innerPadding).fillMaxSize(),
-                        onSearch=onSearch
-                    )
-                }
+enum class Destinations(
+    val route: String,
+    val label: String,
+    val image: Int,
+    val contentDescription: String
+) {
+    Home("home", "Home", R.drawable.home, "Home Icon"),
+    Words("dictionary", "Dictionary", R.drawable.list, "list of all words"),
+    Bookmarks("bookmark", "Bookmark", R.drawable.bookmark, "bookmark icon"),
 }
 
-
 @Composable
-fun HomeBody( modifier: Modifier = Modifier, onSearch:(text:String)->Unit) {
-    Column(
-    modifier = modifier.padding(horizontal = 20.dp),
-        verticalArrangement = Arrangement.Center
-    ) {
-        Text(stringResource(R.string.app_name), style = MaterialTheme.typography.displayLarge)
-        HomeSearchField(
-            modifier = Modifier.fillMaxWidth().padding(vertical = 20.dp),
-            onSearch = onSearch
-        )
-        RecentSearchedWords()
+fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
+    val navController = rememberNavController()
+    val startDestination = Destinations.Home
+    var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
+    Scaffold(
+        modifier = Modifier.fillMaxSize(),
+        bottomBar = {
+            BottomAppBar() {
+                NavigationBar() {
+                    Destinations.entries.forEachIndexed { i, d ->
+                        NavigationBarItem(
+                            selected = i == selectedDestination,
+                            label = {
+                                Text(d.label)
+                            },
+                            icon = {
+                                Icon(painter = painterResource(d.image), d.contentDescription)
+                            },
+                            onClick = {
+                                navController.navigate(d.route)
+                                selectedDestination = i
+                            }
+                        )
+                    }
+
+                }
+
+            }
+        }
+    ) { innerPadding ->
+        NavHost(
+            navController,
+            startDestination.route
+        ) {
+            Destinations.entries.forEach { d ->
+                composable(d.route) {
+                    when (d) {
+                        Destinations.Home -> HomeBody(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize(),
+                            onSearch = onSearch
+                        )
+
+                        Destinations.Words -> DictionaryScreen(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize(),
+                            onSearch = onSearch
+                        )
+
+                        Destinations.Bookmarks -> BookmarkScreen(
+                            modifier = Modifier
+                                .padding(innerPadding)
+                                .fillMaxSize(),
+                            onSearch = onSearch
+                        )
+                    }
+                }
+            }
+        }
     }
 }
 
 @Composable
-fun HomeSearchField(modifier: Modifier= Modifier, onSearch:(text: String)->Unit){
-    var text by remember { mutableStateOf("") }
-    val keyboardController = LocalSoftwareKeyboardController.current
-    OutlinedTextField(
-        modifier = modifier,
-        value = text,
-        onValueChange = {
-            text=it
-        },
-        keyboardOptions = KeyboardOptions(imeAction = ImeAction.Search, keyboardType = KeyboardType.Text),
-        keyboardActions = KeyboardActions(onSearch = {
-            onSearch(text)
-            keyboardController?.hide()
-        }),
-        maxLines = 1,
-//        keyboardActions = KeyboardActions.Default.onSearch,
-        prefix = {
-            Icon(painter = painterResource(R.drawable.search),"Search Icon")
-        }
-    )
-}
-@Composable
-fun RecentSearchedWords(){
-    // title
-    Text(stringResource(R.string.recent), style = MaterialTheme.typography.titleLarge.copy(
-        fontWeight = FontWeight.Bold
-    ))
-    Spacer(Modifier.height(10.dp))
-    // contains
-    Text(stringResource(R.string.recent))
-    Text(stringResource(R.string.recent))
-    Text(stringResource(R.string.recent))
-    Text(stringResource(R.string.recent))
+fun NavigationBody() {
 
 }
 
@@ -100,5 +110,5 @@ fun RecentSearchedWords(){
 @Preview(showBackground = true)
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(onSearch = {})
+    HomeScreen(onSearch = { a, b -> })
 }

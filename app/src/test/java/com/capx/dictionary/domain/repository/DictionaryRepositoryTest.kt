@@ -48,36 +48,14 @@ class DictionaryRepositoryTest {
         val id = 3
         val bookmarkFlow = MutableStateFlow(false)
         every { database.getSelectedBookmarkStatus(id) } returns bookmarkFlow
-        val gotID = dictionaryRepository.isBookmarked(id)
-        assertEquals(gotID, bookmarkFlow)
-        bookmarkFlow.value = false
-        assertEquals(gotID, bookmarkFlow)
+        dictionaryRepository.isBookmarked(id).test {
+            assertEquals(false, awaitItem())
+            bookmarkFlow.value = true
+            assertEquals(true, awaitItem())
+        }
     }
 
-    //    @Test
-//    fun getBanglaLetters() {
-//    }
-//
-//    @Test
-//    fun getEnglishLetters() {
-//    }
-//
-//    @Test
-//    fun getAllBangla() {
-//    }
-//
-//    @Test
-//    fun getAllEnglish() {
-//    }
-//
-//    @Test
-//    fun deleteBookmark() {
-//    }
-//
-//    @Test
-//    fun insertBookmark() {
-//    }
-//
+
     @Test
     fun `Get all bookmarks`() = runTest {
         val bookmarks = MutableStateFlow<List<DictionaryBookmark>>(emptyList())

@@ -15,7 +15,6 @@ import javax.inject.Singleton
 @Module
 @InstallIn(SingletonComponent::class)
 object DictionaryDatabase {
-
     @Provides
     @Singleton
     fun provideRoomDatabase(@ApplicationContext context: Context): DictionaryDatabaseLocal {

@@ -1,6 +1,5 @@
 package com.capx.dictionary.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,23 +14,27 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = PrimaryColor,
+//    secondary = PrimaryColor,
+//    tertiary = PrimaryColor,
+    background = BackgroundColorDark,
+    onBackground = TextColorDark,
+    surface = SubTextColorDark
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
+    primary = PrimaryColor,
+//    secondary = PrimaryColor,
+//    tertiary = PrimaryColor,
+    background = BackgroundColorLight,
+    onBackground = TextColorLight,
+    surface = SubTextColorLight
 
     /* Other default colors to override
-    background = Color(0xFFFFFBFE),
     surface = Color(0xFFFFFBFE),
     onPrimary = Color.White,
     onSecondary = Color.White,
     onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
     onSurface = Color(0xFF1C1B1F),
     */
 )
@@ -65,7 +68,5 @@ fun DictionaryTheme(
         typography = Typography,
         shapes = shapes,
         content = content,
-
-
-        )
+    )
 }

@@ -15,28 +15,20 @@ import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme(
     primary = PrimaryColor,
-//    secondary = PrimaryColor,
-//    tertiary = PrimaryColor,
     background = BackgroundColorDark,
     onBackground = TextColorDark,
-    surface = SubTextColorDark
+    outline = SubTextColorDark,
+    surfaceVariant = TabBackgroundLight,
+    secondaryContainer = TabSelectThumbDark,
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryColor,
-//    secondary = PrimaryColor,
-//    tertiary = PrimaryColor,
+    surfaceVariant = TabBackgroundLight,
+    secondaryContainer = TabSelectThumbLight,
     background = BackgroundColorLight,
     onBackground = TextColorLight,
-    surface = SubTextColorLight
-
-    /* Other default colors to override
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onSurface = Color(0xFF1C1B1F),
-    */
+    outline = SubTextColorLight,
 )
 
 @Composable

@@ -26,11 +26,12 @@ fun Banglabody(
     val alpha = viewmodel.banglaAlphabet.collectAsState()
 
     LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Fixed(3),
+        columns = StaggeredGridCells.Fixed(2),
         modifier = Modifier.fillMaxSize(),
     ) {
 
         item(span = StaggeredGridItemSpan.FullLine) {
+
             TopWords(
                 alpha = alpha.value,
                 letters = letters.value,

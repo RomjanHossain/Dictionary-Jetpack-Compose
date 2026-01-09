@@ -6,6 +6,11 @@ val PrimaryColor = Color(0xff135BEC)
 val BackgroundColorDark = Color(0xff101622)
 val BackgroundColorLight = Color(0xfff6f6f8)
 
+val TabBackgroundDark = Color(0xff192233)
+val TabBackgroundLight = Color(0xffE5E7EB)
+val TabSelectThumbLight = Color(0xffffffff)
+val TabSelectThumbDark = Color(0xff101521)
+
 val TextColorDark = Color(0xffffffff)
 val TextColorLight = Color(0xff020618)
 

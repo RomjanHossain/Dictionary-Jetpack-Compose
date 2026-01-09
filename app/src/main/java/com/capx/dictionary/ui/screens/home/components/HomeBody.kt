@@ -30,7 +30,7 @@ fun HomeBody(modifier: Modifier = Modifier, onSearch: (text: String, id: Int) ->
         Text(
             "Translate between English and Bangla instantly",
             style = MaterialTheme.typography.bodyMedium.copy(
-                background = MaterialTheme.colorScheme.surface,
+                color = MaterialTheme.colorScheme.outline,
                 letterSpacing = 1.5.sp,
             ),
             modifier = Modifier.padding(vertical = 10.dp)

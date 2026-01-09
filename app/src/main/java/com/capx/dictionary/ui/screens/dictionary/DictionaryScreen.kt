@@ -14,6 +14,7 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.capx.dictionary.ui.screens.dictionary.components.Banglabody
+import com.capx.dictionary.ui.screens.dictionary.components.DictionaryTopAppBar
 import com.capx.dictionary.ui.screens.dictionary.components.Englishbody
 
 enum class TabDestinations(
@@ -26,7 +27,7 @@ enum class TabDestinations(
 
 @Composable
 fun DictionaryScreen(
-    modifier: Modifier = Modifier, onSearch: (text: String, id:Int) -> Unit
+    modifier: Modifier = Modifier, onSearch: (text: String, id: Int) -> Unit
 ) {
     val navController = rememberNavController()
     val startDestination = TabDestinations.Bangla
@@ -34,24 +35,15 @@ fun DictionaryScreen(
     Column(
         modifier = modifier,
     ) {
-        PrimaryTabRow(
-            selectedTabIndex = selectedDestination,
-        ) {
-            TabDestinations.entries.forEachIndexed { i, d ->
-                Tab(
-                    selected = i == selectedDestination,
-                    onClick = {
-                        if (i != selectedDestination) {
-                            navController.navigate(d.route)
-                            selectedDestination = i
-                        }
-                    },
-                    text = {
-                        Text(d.label)
-                    }
-                )
+        DictionaryTopAppBar(
+            selectedDestination,
+            onClick = { route, i ->
+                if (i != selectedDestination) {
+                    navController.navigate(route)
+                    selectedDestination = i
+                }
             }
-        }
+        )
         NavHost(
             navController = navController,
             startDestination = startDestination.route

@@ -75,13 +75,11 @@ fun SplashBody(modifier: Modifier = Modifier, state: SplashScreenStates) {
             Spacer(Modifier.height(5.dp))
             Text(
                 "Your Bridge Between Language", style = MaterialTheme.typography.titleMedium.copy(
-                    background = MaterialTheme.colorScheme.surface,
+                    color = MaterialTheme.colorScheme.outline,
                 )
             )
         }
         when (state) {
-
-
             is SplashScreenStates.Progress -> {
                 Column(
                     modifier = Modifier.padding(horizontal = 20.dp)

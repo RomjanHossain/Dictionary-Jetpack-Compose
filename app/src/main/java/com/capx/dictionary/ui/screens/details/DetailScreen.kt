@@ -15,10 +15,13 @@ import com.capx.dictionary.utils.AppLogger
 fun DetailScreen(
     value: String, onGoBack: () -> Unit, id: Int
 ) {
-    AppLogger.info("got value: $value with $id")
     Scaffold(
         modifier = Modifier.fillMaxSize(), topBar = {
-            DetailTopBar(value = value, onGoBack = onGoBack, id = id)
+            DetailTopBar(
+                value = value,
+                onGoBack = onGoBack,
+//                id = id,
+            )
         }) { innerPadding ->
         DetailBody(
             modifier = Modifier

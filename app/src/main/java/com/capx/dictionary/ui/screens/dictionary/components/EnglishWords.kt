@@ -17,7 +17,7 @@ import com.capx.dictionary.ui.screens.dictionary.viewmodel.DictionaryViewmodel
 @Composable
 fun Englishbody(
     viewmodel: DictionaryViewmodel = hiltViewModel(),
-    onSearch: (text: String, id:Int) -> Unit
+    onSearch: (text: String, id: Int) -> Unit
 ) {
     val data = viewmodel.englishsh.collectAsLazyPagingItems()
 
@@ -25,9 +25,8 @@ fun Englishbody(
     val alpha = viewmodel.englishAlpha.collectAsState()
 
     LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Fixed(3),
+        columns = StaggeredGridCells.Fixed(2),
     ) {
-
         item(span = StaggeredGridItemSpan.FullLine) {
             TopWords(
                 letters = letters.value,
@@ -44,7 +43,7 @@ fun Englishbody(
             WordCard(
                 title = title,
                 onSearch = {
-                    onSearch(title, curr?.id?:-1)
+                    onSearch(title, curr?.id ?: -1)
                 }
             )
         }

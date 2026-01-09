@@ -11,3 +11,5 @@ val TextColorLight = Color(0xff020618)
 
 val SubTextColorDark = Color(0xff94A3B8)
 val SubTextColorLight = Color(0xff64748B)
+
+val NavigationUnselectedColor = Color(0xff686F7D)

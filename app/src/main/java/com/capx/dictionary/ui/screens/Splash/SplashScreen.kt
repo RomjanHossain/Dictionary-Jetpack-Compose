@@ -8,10 +8,9 @@ import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.LinearWavyProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
@@ -19,18 +18,16 @@ import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import com.capx.dictionary.ui.screens.Splash.Components.AppIcon
+import com.capx.dictionary.ui.screens.Splash.Components.ProgressForDownload
 import com.capx.dictionary.ui.screens.Splash.ViewModel.SplashScreenStates
 import com.capx.dictionary.ui.screens.Splash.ViewModel.SplashViewModel
+import com.capx.dictionary.ui.theme.DictionaryTheme
 import com.capx.dictionary.ui.theme.PrimaryColor
 import com.capx.dictionary.utils.ThemePreviews
-import io.ktor.serialization.Configuration
 import kotlinx.coroutines.delay
 
 @Composable
@@ -41,7 +38,8 @@ fun SplashScreen(
 
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
     ) { innerPadding ->
         val state = splashState.value
         LaunchedEffect(state) {
@@ -82,16 +80,7 @@ fun SplashBody(modifier: Modifier = Modifier, state: SplashScreenStates) {
             )
         }
         when (state) {
-            is SplashScreenStates.Error -> {
-                Text(
-                    state.msg,
-                    style = TextStyle(fontStyle = FontStyle.Italic, textAlign = TextAlign.Center)
-                )
-            }
 
-            SplashScreenStates.Idle -> {
-                Text("..............")
-            }
 
             is SplashScreenStates.Progress -> {
                 Column(
@@ -101,7 +90,10 @@ fun SplashBody(modifier: Modifier = Modifier, state: SplashScreenStates) {
                         modifier = Modifier.fillMaxWidth(),
                         horizontalArrangement = Arrangement.SpaceBetween,
                     ) {
-                        Text("Setting up dictionary...", style = TextStyle(fontWeight = FontWeight.W400))
+                        Text(
+                            "Setting up dictionary...",
+                            style = TextStyle(fontWeight = FontWeight.W400)
+                        )
                         Text(
                             "${state.progress.toInt()}%",
                             style = TextStyle(color = PrimaryColor, fontWeight = FontWeight.Bold)
@@ -112,30 +104,18 @@ fun SplashBody(modifier: Modifier = Modifier, state: SplashScreenStates) {
                 }
             }
 
-            SplashScreenStates.Success -> {
-                Text("Welcome To The App", style = MaterialTheme.typography.titleLarge)
-            }
+            else -> Spacer(Modifier.height(1.dp))
         }
     }
-}
-
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-fun ProgressForDownload(progress: Float) {
-    LinearWavyProgressIndicator(
-        progress = { progress / 100 },
-        modifier = Modifier
-            .fillMaxWidth(),
-        gapSize = 0.dp,
-        stopSize = 0.dp,
-        wavelength = 20.dp,
-        color = PrimaryColor
-    )
 }
 
 
 @ThemePreviews
 @Composable
 fun SplashBodyPreview() {
-    SplashBody(state = SplashScreenStates.Progress(22.2f))
+    DictionaryTheme() {
+        Surface() {
+            SplashBody(state = SplashScreenStates.Progress(65f))
+        }
+    }
 }

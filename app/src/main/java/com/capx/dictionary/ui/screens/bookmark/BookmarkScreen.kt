@@ -16,6 +16,7 @@ import androidx.compose.material3.Icon
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
+import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
@@ -44,6 +45,9 @@ fun BookmarkScreen(
     val bookmarks = viewModel.bookmarks.collectAsState()
     Column() {
         CenterAlignedTopAppBar(
+            colors = TopAppBarDefaults.topAppBarColors(
+                containerColor = MaterialTheme.colorScheme.background,
+            ),
             title = {
                 Text(
                     stringResource(R.string.Bookmark),
@@ -60,7 +64,11 @@ fun BookmarkScreen(
                 modifier = Modifier.fillMaxSize(),
                 contentAlignment = Alignment.Center,
             ) {
-                Text("No Bookmarks Found!!", textAlign = TextAlign.Center, style = MaterialTheme.typography.titleMedium)
+                Text(
+                    "No Bookmarks Found!!",
+                    textAlign = TextAlign.Center,
+                    style = MaterialTheme.typography.titleMedium
+                )
             }
         } else {
             LazyColumn() {

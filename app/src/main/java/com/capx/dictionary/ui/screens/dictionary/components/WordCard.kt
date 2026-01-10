@@ -1,5 +1,6 @@
 package com.capx.dictionary.ui.screens.dictionary.components
 
+import androidx.compose.foundation.BorderStroke
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.isSystemInDarkTheme
@@ -28,6 +29,7 @@ import com.capx.dictionary.R
 import com.capx.dictionary.ui.theme.CardColorDark
 import com.capx.dictionary.ui.theme.DictionaryTheme
 import com.capx.dictionary.ui.theme.PrimaryColor
+import com.capx.dictionary.ui.theme.TabSelectThumbDark
 import com.capx.dictionary.utils.ThemePreviews
 
 @Composable
@@ -35,6 +37,7 @@ fun WordCard(
     title: String,
     onSearch: (title: String) -> Unit,
 ) {
+    val color = if (isSystemInDarkTheme()) TabSelectThumbDark else Color.White
     Card(
         modifier = Modifier
             .padding(5.dp)
@@ -42,9 +45,12 @@ fun WordCard(
             .clickable(enabled = true, onClick = {
                 onSearch(title)
             }),
+        border = BorderStroke(0.5.dp, PrimaryColor)
+
     ) {
         Column(
             modifier = Modifier
+                .background(color)
                 .padding(20.dp)
                 .fillMaxSize()
         ) {

@@ -2,6 +2,7 @@ package com.capx.dictionary.ui.screens.dictionary.components
 
 import android.R
 import androidx.compose.foundation.clickable
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -33,6 +34,7 @@ import com.capx.dictionary.data.entity.DictionaryFts
 import com.capx.dictionary.ui.theme.DictionaryTheme
 import com.capx.dictionary.ui.theme.PrimaryColor
 import com.capx.dictionary.ui.theme.TabBackgroundDark
+import com.capx.dictionary.ui.theme.TabBackgroundLight
 import com.capx.dictionary.utils.ThemePreviews
 
 @Composable
@@ -54,6 +56,7 @@ fun TopWords(
             contentPadding = PaddingValues(horizontal = 5.dp)
         ) {
             items(letters) { alphabet ->
+                val color = if (isSystemInDarkTheme()) TabBackgroundDark else TabBackgroundLight
                 Card(
                     modifier = Modifier
                         .size(40.dp)
@@ -62,7 +65,8 @@ fun TopWords(
                         },
                     shape = CircleShape,
                     colors = CardDefaults.cardColors(
-                        containerColor = if (alphabet == alpha) PrimaryColor else MaterialTheme.colorScheme.surfaceVariant
+                        containerColor = if (alphabet == alpha) PrimaryColor else color
+
                     ),
                 ) {
                     Box(

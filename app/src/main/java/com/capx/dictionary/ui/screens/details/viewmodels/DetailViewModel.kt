@@ -23,8 +23,7 @@ sealed class DetailScreenState {
 class DetailViewModel @Inject constructor(
 //    private val database: DictionaryDao,
     private val dictionaryRepository: DictionaryRepository
-) :
-    ViewModel() {
+) : ViewModel() {
     private val _detailState = MutableStateFlow<DetailScreenState>(DetailScreenState.Loading)
     private val _isBookmarked = MutableStateFlow<Boolean>(false)
     val detailState = _detailState.asStateFlow()
@@ -43,10 +42,17 @@ class DetailViewModel @Inject constructor(
     fun toogleBookmark(id: Int, value: String) {
         AppLogger.info("Toggling: $id with $value")
         if (id == -1) return;
+        AppLogger.info("Is Bookmarked: ${_isBookmarked.value}")
         if (_isBookmarked.value) {
             // remove from bookmark & make it false
-            _isBookmarked.value = false
 
+            viewModelScope.launch {
+                dictionaryRepository.deleteBookmarkFromWordID(
+                    id,
+                )
+            }
+            _isBookmarked.value = false
+            AppLogger.info("After false Bookmarked: ${_isBookmarked.value}")
         } else {
             viewModelScope.launch {
                 dictionaryRepository.insertBookmark(
@@ -56,7 +62,9 @@ class DetailViewModel @Inject constructor(
                     )
                 )
             }
-            _isBookmarked.value = false
+
+            _isBookmarked.value = true
+            AppLogger.info("After true Bookmarked: ${_isBookmarked.value}")
         }
     }
 

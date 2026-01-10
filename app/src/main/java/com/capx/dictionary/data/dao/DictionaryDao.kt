@@ -47,6 +47,9 @@ interface DictionaryDao {
     @Delete
     suspend fun deleteBookmark(bookmark: DictionaryBookmark)
 
+    @Query("delete from bookmark where wordID=:id")
+    suspend fun deleteBookmarkFromID(id: Int)
+
     @Query("select * from bookmark order by id desc")
     fun getAllBookmarks(): Flow<List<DictionaryBookmark>>
 

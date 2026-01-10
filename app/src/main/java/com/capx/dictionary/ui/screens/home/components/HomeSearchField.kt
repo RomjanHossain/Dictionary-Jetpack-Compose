@@ -48,22 +48,12 @@ fun HomeSearchField(
             LazyColumn() {
                 items(searchResults.itemCount) {
                     val curr = searchResults[it]
-                    Card(
-                        modifier = Modifier
-                            .padding(start = 10.dp, top = 10.dp)
-                            .clickable(
-                                enabled = true,
-                                onClick = {
-                                    if (curr?.title != null) {
-                                        onSearch(curr.title, curr.id ?: -1)
-                                    }
-                                }),
-                    ) {
-                        Text(
-                            curr?.title ?: "",
-                            style = MaterialTheme.typography.bodyLarge
-                        )
-                        HorizontalDivider()
+                    SearchResultCard(
+                        curr = curr,
+                        query = text
+
+                    ) { a, b ->
+                        onSearch(a, b)
                     }
                 }
             }

@@ -6,6 +6,7 @@ import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
+import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
@@ -34,6 +35,8 @@ import androidx.compose.ui.unit.sp
 import com.capx.dictionary.ui.screens.dictionary.TabDestinations
 import com.capx.dictionary.ui.theme.DictionaryTheme
 import com.capx.dictionary.ui.theme.PrimaryColor
+import com.capx.dictionary.ui.theme.TabBackgroundDark
+import com.capx.dictionary.ui.theme.TabBackgroundLight
 import com.capx.dictionary.utils.ThemePreviews
 
 @Composable
@@ -44,13 +47,14 @@ fun DictionaryTopAppBar(
     val items = TabDestinations.entries
     val cornerRadius = 8.dp
 
+    val color = if (isSystemInDarkTheme()) TabBackgroundDark else TabBackgroundLight
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
             .height(50.dp)
             .clip(RoundedCornerShape(cornerRadius))
-            .background(MaterialTheme.colorScheme.surfaceVariant) // iOS light gray background
+            .background(color) // iOS light gray background
             .padding(5.dp) // Gap between edge and indicator
     ) {
         val maxWidth = maxWidth
@@ -69,7 +73,10 @@ fun DictionaryTopAppBar(
                 .width(tabWidth)
                 .fillMaxHeight()
                 .shadow(1.dp, RoundedCornerShape(cornerRadius - 2.dp))
-                .background(MaterialTheme.colorScheme.surfaceContainer, RoundedCornerShape(cornerRadius - 2.dp))
+                .background(
+                    MaterialTheme.colorScheme.surfaceContainer,
+                    RoundedCornerShape(cornerRadius - 2.dp)
+                )
         )
 
         // The Labels

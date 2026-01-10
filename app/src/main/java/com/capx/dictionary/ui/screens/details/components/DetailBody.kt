@@ -4,7 +4,6 @@ import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.height
-import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.material3.MaterialTheme
@@ -33,52 +32,62 @@ fun DetailBody(
 ) {
     viewModel.searchForTheWord(value)
     val state = viewModel.detailState.collectAsState()
-    Column(modifier = modifier) {
-        Text(
-            value,
-            style = MaterialTheme.typography.displaySmall.copy(
-                fontWeight = FontWeight.Bold,
-                color = MaterialTheme.colorScheme.onSurface
+    LazyColumn(modifier = modifier) {
+        item {
+            Text(
+                value,
+                style = MaterialTheme.typography.displaySmall.copy(
+                    fontWeight = FontWeight.Bold,
+                    color = MaterialTheme.colorScheme.onSurface
+                )
             )
-        )
-        Spacer(Modifier.height(20.dp))
-        when (state.value) {
-            is DetailScreenState.Error -> Text((state.value as DetailScreenState.Error).msg)
-            DetailScreenState.Loading -> CenterLoading(
-                modifier = Modifier.fillMaxSize(),
-            )
+            Spacer(Modifier.height(20.dp))
+            when (state.value) {
+                is DetailScreenState.Error -> Text((state.value as DetailScreenState.Error).msg)
+                DetailScreenState.Loading -> CenterLoading(
+                    modifier = Modifier.fillMaxSize(),
+                )
 
-            is DetailScreenState.Success -> {
-                val data = (state.value as DetailScreenState.Success).data
-                val banglaMeaning = data.filter {
-                    it.originalFile?.contains("b2b") ?: false || it.originalFile?.contains(
-                        "e2b"
-                    ) ?: false
-                }
-
-                val englishMeaning = data.filter {
-                    it.originalFile?.contains("b2e") ?: false || it.originalFile?.contains(
-                        "e2e"
-                    ) ?: false
-                }
-
-                LazyColumn() {
-                    items(data.size) {
-                        val curr = data[it]
-                        AppLogger.debug("Current: ${curr.title} - ${curr.originalFile}")
-                        val title =
-                            if ((curr.originalFile?.contains("b2b") ?: false || curr.originalFile?.contains(
-                                    "e2b"
-                                ) ?: false)
-                            ) stringResource(R.string.Bengali) else stringResource(R.string.English)
-                        DetailCardForTrans(
-                            title = title,
-                            content = curr.body ?: "",
-                            modifier = Modifier.padding(vertical = 10.dp)
-                        )
+                is DetailScreenState.Success -> {
+                    val data = (state.value as DetailScreenState.Success).data
+                    val banglaMeaning = data.filter {
+                        it.originalFile?.contains(Regex("b")) == true
                     }
-                }
 
+                    val englishMeaning = data.filter {
+                        AppLogger.info("English Meaning: of ${it.title} || ${it.originalFile}")
+                        it.originalFile?.contains(Regex("e")) == true
+                    }
+
+                    DetailCardForTransList(
+                        title = stringResource(R.string.Bengali),
+                        content = banglaMeaning
+                    )
+                    Spacer(Modifier.height(10.dp))
+
+                    DetailCardForTransList(
+                        title = stringResource(R.string.English),
+                        content = englishMeaning
+                    )
+
+//                LazyColumn() {
+//                    items(data.size) {
+//                        val curr = data[it]
+//                        AppLogger.debug("Current: ${curr.title} - ${curr.originalFile}")
+//                        val title =
+//                            if ((curr.originalFile?.contains("b2b") ?: false || curr.originalFile?.contains(
+//                                    "e2b"
+//                                ) ?: false)
+//                            ) stringResource(R.string.Bengali) else stringResource(R.string.English)
+//                        DetailCardForTrans(
+//                            title = title,
+//                            content = curr.body ?: "",
+//                            modifier = Modifier.padding(vertical = 10.dp)
+//                        )
+//                    }
+//                }
+
+                }
             }
         }
     }

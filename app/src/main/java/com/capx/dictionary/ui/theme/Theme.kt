@@ -18,14 +18,16 @@ private val DarkColorScheme = darkColorScheme(
     background = BackgroundColorDark,
     onBackground = TextColorDark,
     outline = SubTextColorDark,
-    surfaceVariant = TabBackgroundLight,
+    surfaceVariant = CardColorDark,
+    tertiaryContainer = TabBackgroundDark,
     secondaryContainer = TabSelectThumbDark,
 )
 
 private val LightColorScheme = lightColorScheme(
     primary = PrimaryColor,
-    surfaceVariant = TabBackgroundLight,
+    tertiaryContainer = TabBackgroundLight,
     secondaryContainer = TabSelectThumbLight,
+    surfaceVariant = TextColorLight,
     background = BackgroundColorLight,
     onBackground = TextColorLight,
     outline = SubTextColorLight,

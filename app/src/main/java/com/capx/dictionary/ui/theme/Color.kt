@@ -11,7 +11,9 @@ val TabBackgroundLight = Color(0xffE5E7EB)
 val TabSelectThumbLight = Color(0xffffffff)
 val TabSelectThumbDark = Color(0xff101521)
 
+val CardColorDark = Color(0xff192233)
 val TextColorDark = Color(0xffffffff)
+
 val TextColorLight = Color(0xff020618)
 
 val SubTextColorDark = Color(0xff94A3B8)

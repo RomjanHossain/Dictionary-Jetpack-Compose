@@ -68,7 +68,7 @@ fun SplashBody(modifier: Modifier = Modifier, state: SplashScreenStates) {
             AppIcon()
             Spacer(Modifier.height(15.dp))
             Text(
-                "BanglaDic",
+                "BanglaDict",
                 style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold)
             )
 

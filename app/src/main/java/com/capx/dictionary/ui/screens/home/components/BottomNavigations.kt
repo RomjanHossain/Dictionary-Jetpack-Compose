@@ -14,7 +14,7 @@ import com.capx.dictionary.utils.ThemePreviews
 
 @Composable
 fun BottomNavigationBar(
-    selectedDestination: Int,
+    selectedDestination: String?,
     onSelect: (Int, String) -> Unit,
 ) {
     NavigationBar() {
@@ -27,7 +27,7 @@ fun BottomNavigationBar(
                     unselectedTextColor = NavigationUnselectedColor,
                     indicatorColor = PrimaryColor.copy(alpha = 0.2f)
                 ),
-                selected = i == selectedDestination,
+                selected = d.route == selectedDestination,
                 label = {
                     Text(d.label)
                 },
@@ -40,7 +40,6 @@ fun BottomNavigationBar(
                 }
             )
         }
-
     }
 }
 
@@ -49,7 +48,7 @@ fun BottomNavigationBar(
 fun BottomNavigationPreview() {
     DictionaryTheme() {
         BottomNavigationBar(
-            1,
+            "home",
             onSelect = { a, b ->
             },
         )

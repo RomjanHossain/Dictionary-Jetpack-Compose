@@ -11,8 +11,10 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
 import com.capx.dictionary.ui.screens.bookmark.BookmarkScreen
 import com.capx.dictionary.ui.screens.dictionary.DictionaryScreen
@@ -20,6 +22,7 @@ import com.capx.dictionary.ui.screens.home.components.BottomNavigationBar
 import com.capx.dictionary.ui.screens.home.components.Destinations
 import com.capx.dictionary.ui.screens.home.components.HomeBody
 import com.capx.dictionary.ui.theme.DictionaryTheme
+import com.capx.dictionary.utils.AppLogger
 import com.capx.dictionary.utils.ThemePreviews
 
 
@@ -27,16 +30,23 @@ import com.capx.dictionary.utils.ThemePreviews
 fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
     val navController = rememberNavController()
     val startDestination = Destinations.Home
-    var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             BottomAppBar() {
                 BottomNavigationBar(
-                    selectedDestination,
-                    onSelect = { i, route ->
-                        navController.navigate(route)
-                        selectedDestination = i
+                     currentRoute,
+                    onSelect = { _, route ->
+                        navController.navigate(route) {
+                            AppLogger.info("navigating through navigate")
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
+                            }
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
                 )
             }
@@ -74,11 +84,6 @@ fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
             }
         }
     }
-}
-
-@Composable
-fun NavigationBody() {
-
 }
 
 

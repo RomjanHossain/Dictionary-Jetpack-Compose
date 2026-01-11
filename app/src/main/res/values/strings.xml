@@ -1,5 +1,5 @@
 <resources>
-    <string name="app_name">Dictionary</string>
+    <string name="app_name">BanglaDict</string>
     <string name="recent">Recent Searches</string>
     <string name="Bengali">Bengali</string>
     <string name="English">English</string>

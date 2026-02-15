@@ -1,6 +1,7 @@
 package com.capx.dictionary.ui.screens.dictionary.components
 
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
@@ -8,6 +9,7 @@ import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
 import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
@@ -17,7 +19,7 @@ import com.capx.dictionary.ui.screens.dictionary.viewmodel.DictionaryViewmodel
 @Composable
 fun Englishbody(
     viewmodel: DictionaryViewmodel = hiltViewModel(),
-    onSearch: (text: String, id:Int) -> Unit
+    onSearch: (text: String, id: Int) -> Unit
 ) {
     val data = viewmodel.englishsh.collectAsLazyPagingItems()
 
@@ -25,9 +27,12 @@ fun Englishbody(
     val alpha = viewmodel.englishAlpha.collectAsState()
 
     LazyVerticalStaggeredGrid(
-        columns = StaggeredGridCells.Fixed(3),
-    ) {
+        columns = StaggeredGridCells.Fixed(2),
 
+        modifier = Modifier
+            .fillMaxSize()
+            .padding(horizontal = 10.dp),
+    ) {
         item(span = StaggeredGridItemSpan.FullLine) {
             TopWords(
                 letters = letters.value,
@@ -44,7 +49,7 @@ fun Englishbody(
             WordCard(
                 title = title,
                 onSearch = {
-                    onSearch(title, curr?.id?:-1)
+                    onSearch(title, curr?.id ?: -1)
                 }
             )
         }

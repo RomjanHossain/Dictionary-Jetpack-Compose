@@ -1,35 +1,33 @@
 package com.capx.dictionary.ui.screens.Splash
 
-import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.Row
+import androidx.compose.foundation.layout.Spacer
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.fillMaxWidth
+import androidx.compose.foundation.layout.height
 import androidx.compose.foundation.layout.padding
-import androidx.compose.foundation.layout.size
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
-import androidx.compose.material3.Icon
-import androidx.compose.material3.LinearWavyProgressIndicator
 import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Scaffold
+import androidx.compose.material3.Surface
 import androidx.compose.material3.Text
-import androidx.compose.material3.WavyProgressIndicatorDefaults
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
-import androidx.compose.ui.text.font.FontStyle
-import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
-import com.capx.dictionary.R
+import com.capx.dictionary.ui.screens.Splash.Components.AppIcon
+import com.capx.dictionary.ui.screens.Splash.Components.ProgressForDownload
 import com.capx.dictionary.ui.screens.Splash.ViewModel.SplashScreenStates
 import com.capx.dictionary.ui.screens.Splash.ViewModel.SplashViewModel
+import com.capx.dictionary.ui.theme.DictionaryTheme
+import com.capx.dictionary.ui.theme.PrimaryColor
+import com.capx.dictionary.utils.ThemePreviews
 import kotlinx.coroutines.delay
 
 @Composable
@@ -40,7 +38,8 @@ fun SplashScreen(
 
 
     Scaffold(
-        modifier = Modifier.fillMaxSize(),
+        modifier = Modifier
+            .fillMaxSize()
     ) { innerPadding ->
         val state = splashState.value
         LaunchedEffect(state) {
@@ -58,53 +57,63 @@ fun SplashScreen(
 fun SplashBody(modifier: Modifier = Modifier, state: SplashScreenStates) {
     Column(
         modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.Center,
+        verticalArrangement = Arrangement.SpaceAround,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Icon(
-            painter = painterResource(R.drawable.ic_launcher_foreground),
-            "App icon",
-        )
-        when (state) {
-            is SplashScreenStates.Error -> {
-                Text(
-                    state.msg,
-                    style = TextStyle(fontStyle = FontStyle.Italic, textAlign = TextAlign.Center)
+        Spacer(Modifier.height(1.dp))
+        Column(
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+        ) {
+            AppIcon()
+            Spacer(Modifier.height(15.dp))
+            Text(
+                "BanglaDict",
+                style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold)
+            )
+
+            Spacer(Modifier.height(5.dp))
+            Text(
+                "Your Bridge Between Language", style = MaterialTheme.typography.titleMedium.copy(
+                    color = MaterialTheme.colorScheme.outline,
                 )
-            }
-
-            SplashScreenStates.Idle -> {
-                Text("..............")
-            }
-
+            )
+        }
+        when (state) {
             is SplashScreenStates.Progress -> {
-                Text("Downloading ${state.progress.toInt()}%", textAlign = TextAlign.Center)
-                ProgressForDownload(state.progress)
+                Column(
+                    modifier = Modifier.padding(horizontal = 20.dp)
+                ) {
+                    Row(
+                        modifier = Modifier.fillMaxWidth(),
+                        horizontalArrangement = Arrangement.SpaceBetween,
+                    ) {
+                        Text(
+                            "Setting up dictionary...",
+                            style = TextStyle(fontWeight = FontWeight.W400)
+                        )
+                        Text(
+                            "${state.progress.toInt()}%",
+                            style = TextStyle(color = PrimaryColor, fontWeight = FontWeight.Bold)
+                        )
+                    }
+                    Spacer(Modifier.height(15.dp))
+                    ProgressForDownload(state.progress)
+                }
             }
 
-            SplashScreenStates.Success -> {
-                Text("Welcome To The App", style = MaterialTheme.typography.titleLarge)
-            }
+            else -> Spacer(Modifier.height(1.dp))
         }
     }
 }
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
-@Composable
-fun ProgressForDownload(progress: Float) {
-    LinearWavyProgressIndicator(
-        progress = { progress / 100 },
-        modifier = Modifier
-            .fillMaxWidth()
-            .padding(horizontal = 20.dp),
-        gapSize = 0.dp,
-        stopSize = 0.dp,
-        wavelength = 20.dp,
-    )
-}
 
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun SplashBodyPreview() {
-    SplashBody(state = SplashScreenStates.Progress(22.2f))
+    DictionaryTheme() {
+        Surface() {
+            SplashBody(state = SplashScreenStates.Progress(65f))
+        }
+    }
 }

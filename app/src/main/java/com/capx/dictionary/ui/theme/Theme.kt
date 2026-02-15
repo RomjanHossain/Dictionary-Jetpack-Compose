@@ -1,6 +1,5 @@
 package com.capx.dictionary.ui.theme
 
-import android.app.Activity
 import android.os.Build
 import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -15,25 +14,23 @@ import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.unit.dp
 
 private val DarkColorScheme = darkColorScheme(
-    primary = Purple80,
-    secondary = PurpleGrey80,
-    tertiary = Pink80
+    primary = PrimaryColor,
+    background = BackgroundColorDark,
+    onBackground = TextColorDark,
+    outline = SubTextColorDark,
+    surfaceVariant = CardColorDark,
+    tertiaryContainer = TabBackgroundDark,
+    secondaryContainer = TabSelectThumbDark,
 )
 
 private val LightColorScheme = lightColorScheme(
-    primary = Purple40,
-    secondary = PurpleGrey40,
-    tertiary = Pink40
-
-    /* Other default colors to override
-    background = Color(0xFFFFFBFE),
-    surface = Color(0xFFFFFBFE),
-    onPrimary = Color.White,
-    onSecondary = Color.White,
-    onTertiary = Color.White,
-    onBackground = Color(0xFF1C1B1F),
-    onSurface = Color(0xFF1C1B1F),
-    */
+    primary = PrimaryColor,
+    tertiaryContainer = TabBackgroundLight,
+    secondaryContainer = TabSelectThumbLight,
+    surfaceVariant = TextColorLight,
+    background = BackgroundColorLight,
+    onBackground = TextColorLight,
+    outline = SubTextColorLight,
 )
 
 @Composable
@@ -65,7 +62,5 @@ fun DictionaryTheme(
         typography = Typography,
         shapes = shapes,
         content = content,
-
-
-        )
+    )
 }

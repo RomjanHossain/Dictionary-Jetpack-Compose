@@ -25,6 +25,11 @@ class DictionaryRepository @Inject constructor(
         return database.getSelectedBookmarkStatus(id)
     }
 
+    /// delete bookmark from wordID
+    suspend fun deleteBookmarkFromWordID(id: Int) {
+        return database.deleteBookmarkFromID(id)
+    }
+
     // get bangla letters
     suspend fun getBanglaLetters(): List<DictionaryFts> {
         return database.getAllbanglaLetters()

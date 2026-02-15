@@ -3,67 +3,52 @@ package com.capx.dictionary.ui.screens.home
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
-import androidx.compose.material3.Icon
-import androidx.compose.material3.NavigationBar
-import androidx.compose.material3.NavigationBarItem
 import androidx.compose.material3.Scaffold
-import androidx.compose.material3.Text
+import androidx.compose.material3.Surface
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
+import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
+import androidx.navigation.compose.currentBackStackEntryAsState
 import androidx.navigation.compose.rememberNavController
-import com.capx.dictionary.R
 import com.capx.dictionary.ui.screens.bookmark.BookmarkScreen
 import com.capx.dictionary.ui.screens.dictionary.DictionaryScreen
+import com.capx.dictionary.ui.screens.home.components.BottomNavigationBar
+import com.capx.dictionary.ui.screens.home.components.Destinations
 import com.capx.dictionary.ui.screens.home.components.HomeBody
+import com.capx.dictionary.ui.theme.DictionaryTheme
+import com.capx.dictionary.utils.AppLogger
+import com.capx.dictionary.utils.ThemePreviews
 
-
-enum class Destinations(
-    val route: String,
-    val label: String,
-    val image: Int,
-    val contentDescription: String
-) {
-    Home("home", "Home", R.drawable.home, "Home Icon"),
-    Words("dictionary", "Dictionary", R.drawable.list, "list of all words"),
-    Bookmarks("bookmark", "Bookmark", R.drawable.bookmark, "bookmark icon"),
-}
 
 @Composable
 fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
     val navController = rememberNavController()
     val startDestination = Destinations.Home
-    var selectedDestination by rememberSaveable { mutableIntStateOf(startDestination.ordinal) }
+    val navBackStackEntry by navController.currentBackStackEntryAsState()
+    val currentRoute = navBackStackEntry?.destination?.route
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
             BottomAppBar() {
-                NavigationBar() {
-                    Destinations.entries.forEachIndexed { i, d ->
-                        NavigationBarItem(
-                            selected = i == selectedDestination,
-                            label = {
-                                Text(d.label)
-                            },
-                            icon = {
-                                Icon(painter = painterResource(d.image), d.contentDescription)
-                            },
-                            onClick = {
-                                navController.navigate(d.route)
-                                selectedDestination = i
+                BottomNavigationBar(
+                     currentRoute,
+                    onSelect = { _, route ->
+                        navController.navigate(route) {
+                            AppLogger.info("navigating through navigate")
+                            popUpTo(navController.graph.findStartDestination().id) {
+                                saveState = true
                             }
-                        )
+                            launchSingleTop = true
+                            restoreState = true
+                        }
                     }
-
-                }
-
+                )
             }
         }
     ) { innerPadding ->
@@ -101,14 +86,13 @@ fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
     }
 }
 
-@Composable
-fun NavigationBody() {
 
-}
-
-
-@Preview(showBackground = true)
+@ThemePreviews
 @Composable
 fun HomeScreenPreview() {
-    HomeScreen(onSearch = { a, b -> })
+    DictionaryTheme() {
+        Surface() {
+            HomeScreen(onSearch = { a, b -> })
+        }
+    }
 }

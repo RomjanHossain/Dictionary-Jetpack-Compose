@@ -1,0 +1,10 @@
+Looking for a fast, simple, and completely offline Bangla English Dictionary?
+The Bangla English Dictionary Offline is designed for students, professionals, and language learners.
+Whether you want to learn English, improve your Bangla vocabulary, or need a quick translation on the go, our app provides a seamless experience without requiring a constant internet connection.
+Key Features:
+     * Fully Offline Access: No internet? No problem. Once the dictionary database is downloaded, you can search for thousands of words anywhere, even in remote areas.
+     * English to Bangla Dictionary: Find accurate Bengali meanings for English words instantly.
+     * Bangla to English Dictionary: Search using Bengali words to find their English equivalents and definitions.
+     * Fast Search & Auto-Suggestions: Get results as you type. Our smart search algorithm helps you find the right word in milliseconds.
+     * Clear Definitions & Synonyms: Understand word usage with simple, easy-to-read meanings.
+     * Minimalist Design: A clean, distraction-free interface that focuses on what matters most—finding words quickly.

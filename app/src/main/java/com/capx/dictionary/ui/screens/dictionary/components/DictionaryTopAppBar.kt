@@ -1,12 +1,12 @@
 package com.capx.dictionary.ui.screens.dictionary.components
 
+import androidx.compose.animation.animateColorAsState
 import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.interaction.MutableInteractionSource
-import androidx.compose.foundation.isSystemInDarkTheme
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.BoxWithConstraints
 import androidx.compose.foundation.layout.Row
@@ -28,15 +28,10 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
 import androidx.compose.ui.draw.shadow
 import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
-import androidx.compose.ui.unit.sp
 import com.capx.dictionary.ui.screens.dictionary.TabDestinations
 import com.capx.dictionary.ui.theme.DictionaryTheme
-import com.capx.dictionary.ui.theme.PrimaryColor
-import com.capx.dictionary.ui.theme.TabBackgroundDark
-import com.capx.dictionary.ui.theme.TabBackgroundLight
 import com.capx.dictionary.utils.ThemePreviews
 
 @Composable
@@ -45,22 +40,20 @@ fun DictionaryTopAppBar(
     onClick: (String, Int) -> Unit
 ) {
     val items = TabDestinations.entries
-    val cornerRadius = 8.dp
+    val cornerRadius = 12.dp
 
-    val color = if (isSystemInDarkTheme()) TabBackgroundDark else TabBackgroundLight
     BoxWithConstraints(
         modifier = Modifier
             .fillMaxWidth()
             .padding(16.dp)
-            .height(50.dp)
+            .height(48.dp)
             .clip(RoundedCornerShape(cornerRadius))
-            .background(color) // iOS light gray background
-            .padding(5.dp) // Gap between edge and indicator
+            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+            .padding(4.dp)
     ) {
         val maxWidth = maxWidth
         val tabWidth = maxWidth / items.size
 
-        // The Sliding Indicator (The "Thumb")
         val indicatorOffset by animateDpAsState(
             targetValue = tabWidth * selectedDestination,
             animationSpec = spring(stiffness = Spring.StiffnessMediumLow),
@@ -72,32 +65,37 @@ fun DictionaryTopAppBar(
                 .offset(x = indicatorOffset)
                 .width(tabWidth)
                 .fillMaxHeight()
-                .shadow(1.dp, RoundedCornerShape(cornerRadius - 2.dp))
+                .shadow(2.dp, RoundedCornerShape(cornerRadius - 4.dp))
                 .background(
-                    MaterialTheme.colorScheme.surfaceContainer,
-                    RoundedCornerShape(cornerRadius - 2.dp)
+                    MaterialTheme.colorScheme.surface,
+                    RoundedCornerShape(cornerRadius - 4.dp)
                 )
         )
 
-        // The Labels
         Row(modifier = Modifier.fillMaxSize()) {
             items.forEachIndexed { i, d ->
+                val isSelected = selectedDestination == i
+                val textColor by animateColorAsState(
+                    targetValue = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                    label = "textColor"
+                )
+
                 Box(
                     modifier = Modifier
                         .weight(1f)
                         .fillMaxHeight()
+                        .clip(RoundedCornerShape(cornerRadius - 4.dp))
                         .clickable(
                             interactionSource = remember { MutableInteractionSource() },
-                            indication = null // Removes the Material ripple
+                            indication = null
                         ) { onClick(d.route, i) },
                     contentAlignment = Alignment.Center
                 ) {
                     Text(
                         text = d.label,
-                        style = TextStyle(
-                            fontSize = 13.sp,
-                            fontWeight = if (i == selectedDestination) FontWeight.SemiBold else FontWeight.Medium,
-                            color = if (selectedDestination == i) PrimaryColor else MaterialTheme.colorScheme.outline
+                        style = MaterialTheme.typography.bodyMedium.copy(
+                            fontWeight = if (isSelected) FontWeight.Bold else FontWeight.Medium,
+                            color = textColor
                         )
                     )
                 }
@@ -109,7 +107,7 @@ fun DictionaryTopAppBar(
 @Composable
 @ThemePreviews
 fun DictionaryTopAppBarPreview() {
-    DictionaryTheme() {
-        DictionaryTopAppBar(1, onClick = { a, b -> })
+    DictionaryTheme {
+        DictionaryTopAppBar(0, onClick = { _, _ -> })
     }
 }

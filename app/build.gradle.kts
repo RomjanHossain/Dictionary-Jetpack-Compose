@@ -65,7 +65,7 @@ dependencies {
     implementation(libs.androidx.paging.runtime.ktx)
     // Paging Compose integration
     implementation(libs.androidx.paging.compose)
-    implementation(libs.material3)
+    implementation(libs.androidx.material3)
     testImplementation(libs.junit.jupiter)
     testImplementation(libs.junit.jupiter)
     // ksp
@@ -98,6 +98,8 @@ dependencies {
     implementation(libs.kotlinx.coroutines.android)
     // material design
     implementation(libs.androidx.material3)
+    // material icons
+    implementation(libs.compose.material.icons)
     // TEST ====================================================
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)

@@ -1,9 +1,6 @@
 package com.capx.dictionary.ui.screens.dictionary
 
 import androidx.compose.foundation.layout.Column
-import androidx.compose.material3.PrimaryTabRow
-import androidx.compose.material3.Tab
-import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf

@@ -1,11 +1,11 @@
 package com.capx.dictionary.ui.screens.dictionary.components
 
+import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.staggeredgrid.LazyVerticalStaggeredGrid
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridCells
 import androidx.compose.foundation.lazy.staggeredgrid.StaggeredGridItemSpan
-import androidx.compose.material3.ExperimentalMaterial3ExpressiveApi
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Modifier
@@ -17,7 +17,6 @@ import com.capx.dictionary.data.entity.DictionaryFts
 import com.capx.dictionary.ui.screens.dictionary.viewmodel.DictionaryViewmodel
 import com.capx.dictionary.utils.AppLogger
 
-@OptIn(ExperimentalMaterial3ExpressiveApi::class)
 @Composable
 fun Banglabody(
     viewmodel: DictionaryViewmodel = hiltViewModel(),
@@ -29,13 +28,12 @@ fun Banglabody(
 
     LazyVerticalStaggeredGrid(
         columns = StaggeredGridCells.Fixed(2),
-        modifier = Modifier
-            .fillMaxSize()
-            .padding(horizontal = 10.dp),
+        modifier = Modifier.fillMaxSize(),
+        contentPadding = Arrangement.spacedBy(8.dp).let { 12.dp.let { padding -> androidx.compose.foundation.layout.PaddingValues(start = padding, end = padding, bottom = padding) } },
+        horizontalArrangement = Arrangement.spacedBy(8.dp),
+        verticalItemSpacing = 8.dp
     ) {
-
         item(span = StaggeredGridItemSpan.FullLine) {
-
             TopWords(
                 alpha = alpha.value,
                 letters = letters.value,
@@ -43,8 +41,9 @@ fun Banglabody(
                 viewmodel.changeBanglaAlpha(it)
             }
         }
-        items(data.itemCount) {
-            val curr: DictionaryFts? = data[it]
+        
+        items(data.itemCount) { index ->
+            val curr: DictionaryFts? = data[index]
             val title = curr?.title ?: ""
             WordCard(
                 title = title,
@@ -54,6 +53,7 @@ fun Banglabody(
                 }
             )
         }
+        
         if (data.loadState.refresh == LoadState.Loading) {
             item(span = StaggeredGridItemSpan.FullLine) {
                 CenterLoading(

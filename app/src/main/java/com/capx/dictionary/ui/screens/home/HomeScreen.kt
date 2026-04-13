@@ -11,6 +11,7 @@ import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
 import androidx.compose.ui.Modifier
+import androidx.navigation.NavOptions
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
@@ -35,7 +36,9 @@ fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
                 BottomNavigationBar(
                     selectedDestination,
                     onSelect = { i, route ->
-                        navController.navigate(route)
+                        navController.navigate(
+                            route,
+                        )
                         selectedDestination = i
                     }
                 )
@@ -74,11 +77,6 @@ fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
             }
         }
     }
-}
-
-@Composable
-fun NavigationBody() {
-
 }
 
 

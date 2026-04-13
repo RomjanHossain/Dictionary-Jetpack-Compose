@@ -48,7 +48,7 @@ fun DictionaryTopAppBar(
             .padding(16.dp)
             .height(48.dp)
             .clip(RoundedCornerShape(cornerRadius))
-            .background(MaterialTheme.colorScheme.surfaceContainerHigh)
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f))
             .padding(4.dp)
     ) {
         val maxWidth = maxWidth
@@ -67,7 +67,7 @@ fun DictionaryTopAppBar(
                 .fillMaxHeight()
                 .shadow(2.dp, RoundedCornerShape(cornerRadius - 4.dp))
                 .background(
-                    MaterialTheme.colorScheme.surface,
+                    MaterialTheme.colorScheme.primary,
                     RoundedCornerShape(cornerRadius - 4.dp)
                 )
         )
@@ -76,7 +76,7 @@ fun DictionaryTopAppBar(
             items.forEachIndexed { i, d ->
                 val isSelected = selectedDestination == i
                 val textColor by animateColorAsState(
-                    targetValue = if (isSelected) MaterialTheme.colorScheme.primary else MaterialTheme.colorScheme.onSurfaceVariant,
+                    targetValue = if (isSelected) MaterialTheme.colorScheme.onPrimary else MaterialTheme.colorScheme.primary,
                     label = "textColor"
                 )
 
@@ -109,5 +109,13 @@ fun DictionaryTopAppBar(
 fun DictionaryTopAppBarPreview() {
     DictionaryTheme {
         DictionaryTopAppBar(0, onClick = { _, _ -> })
+    }
+}
+
+@Composable
+@ThemePreviews
+fun DictionaryTopAppBarEnglishPreview() {
+    DictionaryTheme {
+        DictionaryTopAppBar(1, onClick = { _, _ -> })
     }
 }

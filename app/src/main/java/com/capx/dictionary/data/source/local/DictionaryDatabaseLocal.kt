@@ -17,27 +17,8 @@ import com.capx.dictionary.data.entity.DictionaryFts
         DictionaryDataDetails::class,
         DictionaryFts::class,
         DictionaryBookmark::class,
-    ], version = 1
+    ], version = 1, exportSchema = false
 )
 abstract class DictionaryDatabaseLocal : RoomDatabase() {
     abstract fun dictionaryDao(): DictionaryDao
-
-    companion object {
-        @Volatile
-        private var INSTANCE: DictionaryDatabaseLocal? = null
-        fun getInstance(context: Context): DictionaryDatabaseLocal {
-            return INSTANCE ?: synchronized(this) {
-                val instance = Room.databaseBuilder(
-                    context.applicationContext,
-                    DictionaryDatabaseLocal::class.java,
-                    "dictionary_db.db"
-                )
-                    .fallbackToDestructiveMigrationOnDowngrade(false)
-                    .fallbackToDestructiveMigration(false)
-                    .build()
-                INSTANCE = instance
-                instance
-            }
-        }
-    }
 }

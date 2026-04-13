@@ -6,6 +6,7 @@ import androidx.room.Delete
 import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
+import androidx.room.RoomWarnings
 import com.capx.dictionary.data.entity.DictionaryBookmark
 import com.capx.dictionary.data.entity.DictionaryDataDetails
 import com.capx.dictionary.data.entity.DictionaryFts
@@ -20,23 +21,28 @@ interface DictionaryDao {
     suspend fun getSelectedWord(query: String): List<DictionaryDataDetails>
 
     ///  search word HOMESCREEN
+    @SuppressWarnings(RoomWarnings.QUERY_MISMATCH)
     @Query("SELECT distinct title, rowid FROM dictionary_fts where lower(title) like lower(:query)||'%'")
     fun searchFts(query: String): PagingSource<Int, DictionaryFts>
 
 
     // get all words from the alphabets
+    @SuppressWarnings(RoomWarnings.QUERY_MISMATCH)
     @Query("SELECT distinct title, rowid FROM dictionary_fts where source_lang=='b' and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
     fun getAllbanglaTitles(letter: String): PagingSource<Int, DictionaryFts>
 
     // alphabets bangla
+    @SuppressWarnings(RoomWarnings.QUERY_MISMATCH)
     @Query("SELECT distinct UPPER(substr(title,1,1)) as title FROM dictionary_fts where source_lang=='b' ")
     suspend fun getAllbanglaLetters(): List<DictionaryFts>
 
     // get all words from the alphabets
+    @SuppressWarnings(RoomWarnings.QUERY_MISMATCH)
     @Query("SELECT title,rowid FROM dictionary_fts where source_lang=='e'  and (title like lower(:letter) || '%' or title like upper(:letter) || '%')")
     fun getAllenglishTitles(letter: String): PagingSource<Int, DictionaryFts>
 
     // alphabets english
+    @SuppressWarnings(RoomWarnings.QUERY_MISMATCH)
     @Query("SELECT distinct Upper(substr(title,1,1)) as title FROM dictionary_fts where source_lang=='e'")
     suspend fun getAllenglishLetters(): List<DictionaryFts>
 

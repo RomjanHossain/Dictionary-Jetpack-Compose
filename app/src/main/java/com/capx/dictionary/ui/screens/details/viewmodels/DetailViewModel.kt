@@ -4,7 +4,9 @@ import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.capx.dictionary.data.entity.DictionaryBookmark
 import com.capx.dictionary.data.entity.DictionaryDataDetails
-import com.capx.dictionary.domain.repository.DictionaryRepository
+import com.capx.dictionary.domain.usecase.GetWordDetailsUseCase
+import com.capx.dictionary.domain.usecase.ObserveBookmarkStatusUseCase
+import com.capx.dictionary.domain.usecase.ToggleBookmarkUseCase
 import com.capx.dictionary.utils.AppLogger
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,8 +23,9 @@ sealed class DetailScreenState {
 
 @HiltViewModel
 class DetailViewModel @Inject constructor(
-//    private val database: DictionaryDao,
-    private val dictionaryRepository: DictionaryRepository
+    private val getWordDetailsUseCase: GetWordDetailsUseCase,
+    private val toggleBookmarkUseCase: ToggleBookmarkUseCase,
+    private val observeBookmarkStatusUseCase: ObserveBookmarkStatusUseCase
 ) : ViewModel() {
     private val _detailState = MutableStateFlow<DetailScreenState>(DetailScreenState.Loading)
     private val _isBookmarked = MutableStateFlow<Boolean>(false)
@@ -32,57 +35,38 @@ class DetailViewModel @Inject constructor(
 
     fun checkBookmarkStatus(id: Int) {
         viewModelScope.launch {
-            val _isB = dictionaryRepository.isBookmarked(id)
-            _isB.collect {
+            observeBookmarkStatusUseCase(id).collect {
                 _isBookmarked.value = it
             }
         }
     }
 
     fun toogleBookmark(id: Int, value: String) {
-        AppLogger.info("Toggling: $id with $value")
-        if (id == -1) return;
-        AppLogger.info("Is Bookmarked: ${_isBookmarked.value}")
-        if (_isBookmarked.value) {
-            // remove from bookmark & make it false
-
-            viewModelScope.launch {
-                dictionaryRepository.deleteBookmarkFromWordID(
-                    id,
-                )
+        if (id == -1) return
+        viewModelScope.launch {
+            try {
+                toggleBookmarkUseCase(id, value)
+            } catch (e: Exception) {
+                AppLogger.err("Failed to toggle bookmark", e)
             }
-            _isBookmarked.value = false
-            AppLogger.info("After false Bookmarked: ${_isBookmarked.value}")
-        } else {
-            viewModelScope.launch {
-                dictionaryRepository.insertBookmark(
-                    DictionaryBookmark(
-                        title = value,
-                        wordID = id,
-                    )
-                )
-            }
-
-            _isBookmarked.value = true
-            AppLogger.info("After true Bookmarked: ${_isBookmarked.value}")
         }
     }
 
 
     fun searchForTheWord(word: String) {
         if (_detailState.value is DetailScreenState.Success) {
-            val _data = _detailState.value as DetailScreenState.Success
-            if (_data.data.firstOrNull()?.title == word) {
+            val successData = _detailState.value as DetailScreenState.Success
+            if (successData.data.firstOrNull()?.title == word) {
                 return
             }
         }
         _detailState.value = DetailScreenState.Loading
         viewModelScope.launch {
             try {
-                val results = dictionaryRepository.getSingleWord(word)
+                val results = getWordDetailsUseCase(word)
                 _detailState.value = DetailScreenState.Success(results)
             } catch (e: Exception) {
-                _detailState.value = DetailScreenState.Error("Error Getting the Word, $e")
+                _detailState.value = DetailScreenState.Error("Error Getting the Word: ${e.localizedMessage}")
             }
         }
     }

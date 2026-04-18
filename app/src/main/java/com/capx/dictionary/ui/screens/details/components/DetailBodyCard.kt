@@ -30,7 +30,6 @@ import androidx.compose.ui.unit.dp
 import com.capx.dictionary.R
 import com.capx.dictionary.data.entity.DictionaryDataDetails
 import com.capx.dictionary.ui.theme.DictionaryTheme
-import com.capx.dictionary.ui.theme.PrimaryColor
 import com.capx.dictionary.utils.AppLogger
 import com.capx.dictionary.utils.ThemePreviews
 
@@ -96,11 +95,11 @@ fun CircularAvater(title: String) {
     ) {
         Box(
             modifier = Modifier
-                .background(color = PrimaryColor.copy(alpha = 0.2f))
+                .background(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
                 .fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            Text(title, color = PrimaryColor, style = MaterialTheme.typography.labelSmall)
+            Text(title, color = MaterialTheme.colorScheme.primary, style = MaterialTheme.typography.labelSmall)
         }
     }
 }
@@ -114,7 +113,7 @@ fun DetailCardForTrans(modifier: Modifier = Modifier, title: String, content: St
             Icon(
                 painterResource(R.drawable.baseline_menu_book_24),
                 "app Icon",
-                tint = PrimaryColor,
+                tint = MaterialTheme.colorScheme.primary,
                 modifier = Modifier
                     .size(30.dp)
                     .padding(end = 10.dp)

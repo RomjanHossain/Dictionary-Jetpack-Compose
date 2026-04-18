@@ -32,7 +32,6 @@ import androidx.compose.ui.unit.dp
 import com.capx.dictionary.R
 import com.capx.dictionary.data.entity.DictionaryFts
 import com.capx.dictionary.ui.theme.DictionaryTheme
-import com.capx.dictionary.ui.theme.PrimaryColor
 import com.capx.dictionary.utils.ThemePreviews
 
 @Composable
@@ -83,7 +82,7 @@ fun annotatedHighlightedString(
     query: String,
     highlightStyle: SpanStyle = SpanStyle(
         fontWeight = FontWeight.Bold,
-        color = PrimaryColor
+        color = MaterialTheme.colorScheme.primary
     )
 ): AnnotatedString {
     return buildAnnotatedString {
@@ -118,11 +117,11 @@ fun CircularIcon(
     ) {
         Box(
             modifier = Modifier
-                .background(color = PrimaryColor.copy(alpha = 0.2f))
+                .background(color = MaterialTheme.colorScheme.primary.copy(alpha = 0.2f))
                 .fillMaxSize(),
             contentAlignment = Alignment.Center,
         ) {
-            Icon(painter = painterResource(id), des, tint = PrimaryColor)
+            Icon(painter = painterResource(id), des, tint = MaterialTheme.colorScheme.primary)
         }
     }
 }

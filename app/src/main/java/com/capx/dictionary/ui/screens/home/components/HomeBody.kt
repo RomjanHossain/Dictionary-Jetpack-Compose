@@ -15,9 +15,7 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.TextUnit
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
-import androidx.room.util.copy
 import com.capx.dictionary.R
-import com.capx.dictionary.ui.theme.PrimaryColor
 
 @Composable
 fun HomeBody(modifier: Modifier = Modifier, onSearch: (text: String, id: Int) -> Unit) {
@@ -26,7 +24,7 @@ fun HomeBody(modifier: Modifier = Modifier, onSearch: (text: String, id: Int) ->
         verticalArrangement = Arrangement.Center
     ) {
         Text("Find any word", style = MaterialTheme.typography.displayLarge)
-        Text("in seconds", style = MaterialTheme.typography.displayLarge.copy(color = PrimaryColor))
+        Text("in seconds", style = MaterialTheme.typography.displayLarge.copy(color = MaterialTheme.colorScheme.primary))
         Text(
             "Translate between English and Bangla instantly",
             style = MaterialTheme.typography.bodyMedium.copy(

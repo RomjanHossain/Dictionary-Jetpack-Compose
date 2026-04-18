@@ -3,15 +3,15 @@ package com.capx.dictionary.ui.theme
 import androidx.compose.ui.graphics.Color
 
 val PrimaryColor = Color(0xff135BEC)
-val BackgroundColorDark = Color(0xff101622)
-val BackgroundColorLight = Color(0xfff6f6f8)
+val BackgroundColorDark = Color(0xff0F172A) // Deeper blue-ish slate
+val BackgroundColorLight = Color(0xffF8FAFC) // Very light blue-ish tint
 
-val TabBackgroundDark = Color(0xff192233)
-val TabBackgroundLight = Color(0xffE5E7EB)
+val TabBackgroundDark = Color(0xff1E293B)
+val TabBackgroundLight = Color(0xffF1F5F9)
 val TabSelectThumbLight = Color(0xffffffff)
-val TabSelectThumbDark = Color(0xff101521)
+val TabSelectThumbDark = Color(0xff0F172A)
 
-val CardColorDark = Color(0xff192233)
+val CardColorDark = Color(0xff1E293B)
 val TextColorDark = Color(0xffffffff)
 
 val TextColorLight = Color(0xff020618)

@@ -26,7 +26,6 @@ import com.capx.dictionary.ui.screens.Splash.Components.ProgressForDownload
 import com.capx.dictionary.ui.screens.Splash.ViewModel.SplashScreenStates
 import com.capx.dictionary.ui.screens.Splash.ViewModel.SplashViewModel
 import com.capx.dictionary.ui.theme.DictionaryTheme
-import com.capx.dictionary.ui.theme.PrimaryColor
 import com.capx.dictionary.utils.ThemePreviews
 import kotlinx.coroutines.delay
 
@@ -94,7 +93,7 @@ fun SplashBody(modifier: Modifier = Modifier, state: SplashScreenStates) {
                         )
                         Text(
                             "${state.progress.toInt()}%",
-                            style = TextStyle(color = PrimaryColor, fontWeight = FontWeight.Bold)
+                            style = TextStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
                         )
                     }
                     Spacer(Modifier.height(15.dp))

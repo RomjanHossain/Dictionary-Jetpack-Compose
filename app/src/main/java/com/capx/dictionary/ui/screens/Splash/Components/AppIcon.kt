@@ -5,6 +5,7 @@ import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.layout.size
 import androidx.compose.foundation.shape.RoundedCornerShape
+import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Icon
 import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
@@ -14,14 +15,13 @@ import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.unit.dp
 import com.capx.dictionary.R
 import com.capx.dictionary.ui.theme.DictionaryTheme
-import com.capx.dictionary.ui.theme.PrimaryColor
 import com.capx.dictionary.utils.ThemePreviews
 
 @Composable
 fun AppIcon(){
     Box(
         modifier = Modifier
-            .background(PrimaryColor.copy(alpha = 0.2f), shape = RoundedCornerShape(28.dp))
+            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.2f), shape = RoundedCornerShape(28.dp))
     ) {
         Text(
             "Aa",
@@ -32,7 +32,7 @@ fun AppIcon(){
         Icon(
             painter = painterResource(R.drawable.baseline_menu_book_24),
             "App icon",
-            tint = PrimaryColor,
+            tint = MaterialTheme.colorScheme.primary,
             modifier = Modifier
                 .padding(30.dp)
                 .size(100.dp)

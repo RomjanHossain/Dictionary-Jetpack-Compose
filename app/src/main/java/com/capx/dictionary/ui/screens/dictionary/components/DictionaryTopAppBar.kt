@@ -48,7 +48,7 @@ fun DictionaryTopAppBar(
             .padding(16.dp)
             .height(48.dp)
             .clip(RoundedCornerShape(cornerRadius))
-            .background(MaterialTheme.colorScheme.primary.copy(alpha = 0.12f))
+            .background(MaterialTheme.colorScheme.tertiaryContainer)
             .padding(4.dp)
     ) {
         val maxWidth = maxWidth

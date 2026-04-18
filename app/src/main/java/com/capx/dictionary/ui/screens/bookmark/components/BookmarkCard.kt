@@ -18,7 +18,6 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import com.capx.dictionary.R
 import com.capx.dictionary.data.entity.DictionaryBookmark
-import com.capx.dictionary.ui.theme.PrimaryColor
 import com.capx.dictionary.utils.ThemePreviews
 
 @Composable
@@ -54,7 +53,7 @@ fun BookmarkCard(
                     // remove the word
                     onDelete(word)
                 },
-                tint = PrimaryColor,
+                tint = MaterialTheme.colorScheme.primary,
             )
 
         }

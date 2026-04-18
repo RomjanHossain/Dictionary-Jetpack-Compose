@@ -35,21 +35,19 @@ fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
     Scaffold(
         modifier = Modifier.fillMaxSize(),
         bottomBar = {
-            BottomAppBar() {
-                BottomNavigationBar(
-                     currentRoute,
-                    onSelect = { _, route ->
-                        navController.navigate(route) {
-                            AppLogger.info("navigating through navigate")
-                            popUpTo(navController.graph.findStartDestination().id) {
-                                saveState = true
-                            }
-                            launchSingleTop = true
-                            restoreState = true
+            BottomNavigationBar(
+                currentRoute,
+                onSelect = { _, route ->
+                    navController.navigate(route) {
+                        AppLogger.info("navigating through navigate")
+                        popUpTo(navController.graph.findStartDestination().id) {
+                            saveState = true
                         }
+                        launchSingleTop = true
+                        restoreState = true
                     }
-                )
-            }
+                }
+            )
         }
     ) { innerPadding ->
         NavHost(

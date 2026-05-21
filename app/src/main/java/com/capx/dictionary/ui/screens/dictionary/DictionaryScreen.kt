@@ -1,6 +1,7 @@
 package com.capx.dictionary.ui.screens.dictionary
 
 import androidx.compose.foundation.layout.Column
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
@@ -43,7 +44,8 @@ fun DictionaryScreen(
         )
         NavHost(
             navController = navController,
-            startDestination = startDestination.route
+            startDestination = startDestination.route,
+            modifier = Modifier.weight(1f).fillMaxWidth()
         ) {
             TabDestinations.entries.forEach { d ->
                 composable(d.route) {

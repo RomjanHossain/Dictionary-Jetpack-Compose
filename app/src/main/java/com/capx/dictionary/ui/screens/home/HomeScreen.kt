@@ -1,5 +1,6 @@
 package com.capx.dictionary.ui.screens.home
 
+import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.fillMaxSize
 import androidx.compose.foundation.layout.padding
 import androidx.compose.material3.BottomAppBar
@@ -10,7 +11,9 @@ import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableIntStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.unit.dp
 import androidx.navigation.NavGraph.Companion.findStartDestination
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
@@ -32,9 +35,46 @@ fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
     val startDestination = Destinations.Home
     val navBackStackEntry by navController.currentBackStackEntryAsState()
     val currentRoute = navBackStackEntry?.destination?.route
-    Scaffold(
-        modifier = Modifier.fillMaxSize(),
-        bottomBar = {
+    
+    Box(modifier = Modifier.fillMaxSize()) {
+        Scaffold(
+            modifier = Modifier.fillMaxSize(),
+        ) { innerPadding ->
+            NavHost(
+                navController,
+                startDestination.route,
+                modifier = Modifier.padding(bottom = 80.dp) // Space for floating nav bar
+            ) {
+                Destinations.entries.forEach { d ->
+                    composable(d.route) {
+                        when (d) {
+                            Destinations.Home -> HomeBody(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                onSearch = onSearch
+                            )
+
+                            Destinations.Words -> DictionaryScreen(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                onSearch = onSearch
+                            )
+
+                            Destinations.Bookmarks -> BookmarkScreen(
+                                modifier = Modifier
+                                    .fillMaxSize(),
+                                onSearch = onSearch
+                            )
+                        }
+                    }
+                }
+            }
+        }
+        
+        Box(
+            modifier = Modifier
+                .align(Alignment.BottomCenter)
+        ) {
             BottomNavigationBar(
                 currentRoute,
                 onSelect = { _, route ->
@@ -48,38 +88,6 @@ fun HomeScreen(onSearch: (text: String, id: Int) -> Unit) {
                     }
                 }
             )
-        }
-    ) { innerPadding ->
-        NavHost(
-            navController,
-            startDestination.route
-        ) {
-            Destinations.entries.forEach { d ->
-                composable(d.route) {
-                    when (d) {
-                        Destinations.Home -> HomeBody(
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize(),
-                            onSearch = onSearch
-                        )
-
-                        Destinations.Words -> DictionaryScreen(
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize(),
-                            onSearch = onSearch
-                        )
-
-                        Destinations.Bookmarks -> BookmarkScreen(
-                            modifier = Modifier
-                                .padding(innerPadding)
-                                .fillMaxSize(),
-                            onSearch = onSearch
-                        )
-                    }
-                }
-            }
         }
     }
 }

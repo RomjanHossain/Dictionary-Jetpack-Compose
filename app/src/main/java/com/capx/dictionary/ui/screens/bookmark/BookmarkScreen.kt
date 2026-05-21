@@ -21,6 +21,7 @@ import androidx.compose.runtime.Composable
 import androidx.compose.runtime.collectAsState
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
@@ -34,7 +35,6 @@ import com.capx.dictionary.data.entity.DictionaryBookmark
 import com.capx.dictionary.ui.screens.bookmark.components.BookmarkCard
 import com.capx.dictionary.ui.screens.bookmark.viewmodel.BookmarkViewmodels
 import com.capx.dictionary.utils.AppLogger
-import java.time.format.TextStyle
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
@@ -43,17 +43,17 @@ fun BookmarkScreen(
     viewModel: BookmarkViewmodels = hiltViewModel()
 ) {
     val bookmarks = viewModel.bookmarks.collectAsState()
-    Column() {
+    Column(modifier = modifier.fillMaxSize()) {
         CenterAlignedTopAppBar(
             colors = TopAppBarDefaults.topAppBarColors(
-                containerColor = MaterialTheme.colorScheme.background,
+                containerColor = Color.Transparent,
+                titleContentColor = MaterialTheme.colorScheme.onSurface
             ),
             title = {
                 Text(
                     stringResource(R.string.Bookmark),
-                    style = androidx.compose.ui.text.TextStyle(
-                        fontWeight = FontWeight.Bold,
-                        letterSpacing = 0.05.em
+                    style = MaterialTheme.typography.headlineSmall.copy(
+                        fontWeight = FontWeight.Bold
                     )
                 )
             }
@@ -61,24 +61,30 @@ fun BookmarkScreen(
 
         if (bookmarks.value.isEmpty()) {
             Box(
-                modifier = Modifier.fillMaxSize(),
+                modifier = Modifier.weight(1f).fillMaxWidth(),
                 contentAlignment = Alignment.Center,
             ) {
                 Text(
-                    "No Bookmarks Found!!",
+                    "No bookmarks yet",
                     textAlign = TextAlign.Center,
-                    style = MaterialTheme.typography.titleMedium
+                    style = MaterialTheme.typography.bodyLarge.copy(
+                        color = MaterialTheme.colorScheme.onSurfaceVariant
+                    )
                 )
             }
         } else {
-            LazyColumn() {
-                items(bookmarks.value.size) {
-                    val bookmark = bookmarks.value[it]
-                    AppLogger.info("Current bookmark: ${bookmark.title} with ${bookmark.id}")
-                    BookmarkCard(bookmark, onSearch = onSearch, onDelete = {
-                        viewModel.delete(bookmark)
-                    })
-
+            LazyColumn(
+                modifier = Modifier.weight(1f).fillMaxWidth(),
+                verticalArrangement = Arrangement.spacedBy(8.dp),
+                contentPadding = androidx.compose.foundation.layout.PaddingValues(bottom = 100.dp) // Space for floating nav bar
+            ) {
+                items(bookmarks.value.size) { index ->
+                    val bookmark = bookmarks.value[index]
+                    BookmarkCard(
+                        bookmark, 
+                        onSearch = onSearch, 
+                        onDelete = { viewModel.delete(bookmark) }
+                    )
                 }
             }
         }

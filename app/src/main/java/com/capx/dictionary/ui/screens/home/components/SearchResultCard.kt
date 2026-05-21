@@ -40,39 +40,54 @@ fun SearchResultCard(
     query: String,
     onSearch: (String, Int) -> Unit,
 ) {
-
-    Card(
+    Row(
         modifier = Modifier
+            .fillMaxWidth()
             .clickable(
-                enabled = true,
+                enabled = curr?.title != null,
                 onClick = {
                     if (curr?.title != null) {
                         onSearch(curr.title, curr.id ?: -1)
                     }
-                }),
+                }
+            )
+            .padding(horizontal = 16.dp, vertical = 12.dp),
+        horizontalArrangement = Arrangement.SpaceBetween,
+        verticalAlignment = Alignment.CenterVertically,
     ) {
         Row(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(horizontal = 20.dp, vertical = 10.dp),
-            horizontalArrangement = Arrangement.SpaceBetween,
             verticalAlignment = Alignment.CenterVertically,
+            modifier = Modifier.weight(1f)
         ) {
-            Row(
-                horizontalArrangement = Arrangement.Center,
-                verticalAlignment = Alignment.CenterVertically,
+            Box(
+                modifier = Modifier
+                    .size(36.dp)
+                    .background(
+                        MaterialTheme.colorScheme.primary.copy(alpha = 0.1f),
+                        MaterialTheme.shapes.small
+                    ),
+                contentAlignment = Alignment.Center
             ) {
-                CircularIcon(des = "Search", R.drawable.search)
-                Spacer(Modifier.width(10.dp))
-                Text(
-//                    curr?.title ?: "",
-                    annotatedHighlightedString(curr?.title ?: "", query = query),
-                    style = MaterialTheme.typography.bodyLarge,
-                    color = MaterialTheme.colorScheme.onSurface,
+                Icon(
+                    painter = painterResource(R.drawable.search),
+                    contentDescription = null,
+                    modifier = Modifier.size(18.dp),
+                    tint = MaterialTheme.colorScheme.primary
                 )
             }
-            Icon(painterResource(R.drawable.go_arrow), "Go Arrow")
+            Spacer(Modifier.width(12.dp))
+            Text(
+                annotatedHighlightedString(curr?.title ?: "", query = query),
+                style = MaterialTheme.typography.bodyLarge,
+                color = MaterialTheme.colorScheme.onSurface,
+            )
         }
+        Icon(
+            painter = painterResource(R.drawable.go_arrow),
+            contentDescription = null,
+            modifier = Modifier.size(16.dp),
+            tint = MaterialTheme.colorScheme.onSurfaceVariant.copy(alpha = 0.5f)
+        )
     }
 }
 

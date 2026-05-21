@@ -20,23 +20,31 @@ import com.capx.dictionary.R
 @Composable
 fun HomeBody(modifier: Modifier = Modifier, onSearch: (text: String, id: Int) -> Unit) {
     Column(
-        modifier = modifier.padding(horizontal = 20.dp),
+        modifier = modifier.padding(horizontal = 24.dp),
         verticalArrangement = Arrangement.Center
     ) {
-        Text("Find any word", style = MaterialTheme.typography.displayLarge)
-        Text("in seconds", style = MaterialTheme.typography.displayLarge.copy(color = MaterialTheme.colorScheme.primary))
+        Text(
+            "Find any word",
+            style = MaterialTheme.typography.displayLarge.copy(
+                lineHeight = 44.sp
+            )
+        )
+        Text(
+            "in seconds",
+            style = MaterialTheme.typography.displayLarge.copy(
+                color = MaterialTheme.colorScheme.primary,
+                lineHeight = 44.sp
+            )
+        )
         Text(
             "Translate between English and Bangla instantly",
-            style = MaterialTheme.typography.bodyMedium.copy(
-                color = MaterialTheme.colorScheme.outline,
-                letterSpacing = 1.5.sp,
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onSurfaceVariant,
             ),
-            modifier = Modifier.padding(vertical = 10.dp)
+            modifier = Modifier.padding(top = 16.dp, bottom = 32.dp)
         )
         HomeSearchField(
-            modifier = Modifier
-                .fillMaxWidth()
-                .padding(vertical = 20.dp),
+            modifier = Modifier.fillMaxWidth(),
             onSearch = onSearch
         )
     }

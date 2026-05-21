@@ -1,5 +1,9 @@
 package com.capx.dictionary.ui.screens.details.components
 
+import androidx.compose.foundation.background
+import androidx.compose.foundation.layout.padding
+import androidx.compose.foundation.layout.size
+import androidx.compose.foundation.shape.CircleShape
 import androidx.compose.material3.CenterAlignedTopAppBar
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.Icon
@@ -8,9 +12,13 @@ import androidx.compose.material3.MaterialTheme
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBarDefaults
 import androidx.compose.runtime.Composable
+import androidx.compose.ui.Modifier
+import androidx.compose.ui.draw.clip
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.TextStyle
 import androidx.compose.ui.text.font.FontWeight
+import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.em
 import com.capx.dictionary.R
 import com.capx.dictionary.utils.ThemePreviews
@@ -21,34 +29,34 @@ import com.capx.dictionary.utils.ThemePreviews
 fun DetailTopBar(
     value: String,
     onGoBack: () -> Unit,
-//    id: Int,
-//    viewModel: DetailViewModel = hiltViewModel()
 ) {
-//    viewModel.checkBookmarkStatus(id)
-//    val isBookmarked = viewModel.isBookmarked.collectAsState()
     CenterAlignedTopAppBar(
         colors = TopAppBarDefaults.topAppBarColors(
-            containerColor = MaterialTheme.colorScheme.background,
+            containerColor = Color.Transparent,
+            titleContentColor = MaterialTheme.colorScheme.onSurface,
+            navigationIconContentColor = MaterialTheme.colorScheme.onSurface,
         ),
         navigationIcon = {
-            IconButton(onClick = onGoBack) {
-                Icon(painter = painterResource(R.drawable.nav_back), "Navigation back icon")
+            IconButton(
+                onClick = onGoBack,
+                modifier = Modifier
+                    .padding(start = 8.dp)
+                    .clip(CircleShape)
+                    .background(MaterialTheme.colorScheme.surface)
+            ) {
+                Icon(
+                    painter = painterResource(R.drawable.nav_back),
+                    contentDescription = "Back",
+                    modifier = Modifier.size(20.dp)
+                )
             }
         },
-//        actions = {
-//            IconButton(onClick = {
-//                viewModel.toogleBookmark(id, value)
-//            }) {
-//                Icon(
-//                    painter = painterResource(if (isBookmarked.value) R.drawable.bookmarkfill else R.drawable.bookmark),
-//                    "Bookmark this"
-//                )
-//            }
-//        },
         title = {
             Text(
-                "Word Details",
-                style = TextStyle(fontWeight = FontWeight.Bold, letterSpacing = 0.05.em)
+                "Definition",
+                style = MaterialTheme.typography.headlineSmall.copy(
+                    fontWeight = FontWeight.Bold
+                )
             )
         },
     )

@@ -1,5 +1,6 @@
 package com.capx.dictionary.ui.screens.Splash
 
+import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
@@ -55,53 +56,47 @@ fun SplashScreen(
 @Composable
 fun SplashBody(modifier: Modifier = Modifier, state: SplashScreenStates) {
     Column(
-        modifier = modifier.fillMaxSize(),
-        verticalArrangement = Arrangement.SpaceAround,
+        modifier = modifier.fillMaxSize().background(MaterialTheme.colorScheme.background),
+        verticalArrangement = Arrangement.Center,
         horizontalAlignment = Alignment.CenterHorizontally,
     ) {
-        Spacer(Modifier.height(1.dp))
-        Column(
-            verticalArrangement = Arrangement.Center,
-            horizontalAlignment = Alignment.CenterHorizontally
-        ) {
-            AppIcon()
-            Spacer(Modifier.height(15.dp))
-            Text(
-                "BanglaDict",
-                style = MaterialTheme.typography.displaySmall.copy(fontWeight = FontWeight.Bold)
+        AppIcon()
+        Spacer(Modifier.height(32.dp))
+        Text(
+            "BanglaDict",
+            style = MaterialTheme.typography.displayMedium.copy(
+                fontWeight = FontWeight.Bold,
+                color = MaterialTheme.colorScheme.onSurface
             )
+        )
+        Text(
+            "Your Bridge Between Languages",
+            style = MaterialTheme.typography.bodyLarge.copy(
+                color = MaterialTheme.colorScheme.onSurfaceVariant
+            ),
+            modifier = Modifier.padding(top = 8.dp)
+        )
 
-            Spacer(Modifier.height(5.dp))
-            Text(
-                "Your Bridge Between Language", style = MaterialTheme.typography.titleMedium.copy(
-                    color = MaterialTheme.colorScheme.outline,
-                )
-            )
-        }
+        Spacer(Modifier.height(64.dp))
+
         when (state) {
             is SplashScreenStates.Progress -> {
                 Column(
-                    modifier = Modifier.padding(horizontal = 20.dp)
+                    modifier = Modifier.padding(horizontal = 48.dp),
+                    horizontalAlignment = Alignment.CenterHorizontally
                 ) {
-                    Row(
-                        modifier = Modifier.fillMaxWidth(),
-                        horizontalArrangement = Arrangement.SpaceBetween,
-                    ) {
-                        Text(
-                            "Setting up dictionary...",
-                            style = TextStyle(fontWeight = FontWeight.W400)
-                        )
-                        Text(
-                            "${state.progress.toInt()}%",
-                            style = TextStyle(color = MaterialTheme.colorScheme.primary, fontWeight = FontWeight.Bold)
-                        )
-                    }
-                    Spacer(Modifier.height(15.dp))
                     ProgressForDownload(state.progress)
+                    Spacer(Modifier.height(16.dp))
+                    Text(
+                        "Setting up your dictionary... ${state.progress.toInt()}%",
+                        style = MaterialTheme.typography.labelLarge.copy(
+                            color = MaterialTheme.colorScheme.primary,
+                            fontWeight = FontWeight.Medium
+                        )
+                    )
                 }
             }
-
-            else -> Spacer(Modifier.height(1.dp))
+            else -> {}
         }
     }
 }

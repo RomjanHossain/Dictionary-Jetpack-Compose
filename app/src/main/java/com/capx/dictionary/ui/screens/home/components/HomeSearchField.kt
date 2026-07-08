@@ -15,9 +15,9 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.unit.dp
 import androidx.hilt.lifecycle.viewmodel.compose.hiltViewModel
+import androidx.paging.LoadState
 import androidx.paging.compose.collectAsLazyPagingItems
 import com.capx.dictionary.ui.components.GlassCard
-import com.capx.dictionary.ui.screens.details.viewmodels.DetailScreenState
 import com.capx.dictionary.ui.screens.home.viewmodels.HomeViewModel
 
 @Composable
@@ -39,7 +39,7 @@ fun HomeSearchField(
                 onSearch(text, -1)
                 keyboardController?.hide()
             },
-            isTrailingIcon = searchResults.itemCount != 0 && searchResults.loadState.refresh is DetailScreenState.Loading,
+            isTrailingIcon = searchResults.itemCount != 0 && searchResults.loadState.refresh is LoadState.Loading,
         )
 
         Spacer(modifier = Modifier.height(12.dp))

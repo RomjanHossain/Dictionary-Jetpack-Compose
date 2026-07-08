@@ -38,7 +38,7 @@ fun DetailScreen(
                 modifier = Modifier
                     .padding(innerPadding)
                     .fillMaxSize()
-                    .padding(horizontal = 24.dp),
+                    .padding(horizontal = 24.dp).padding(bottom = 34.dp),
                 value = value,
             )
         }
